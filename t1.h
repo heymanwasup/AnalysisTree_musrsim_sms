@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Wed Nov 17 13:56:58 2021 by ROOT version 6.24/06
+// Thu Nov 18 11:12:45 2021 by ROOT version 6.24/06
 // from TTree t1/a simple Tree with simple variables
-// found on file: musr_1003.root
+// found on file: musr_1003_gmm1e5_10GeV_1cm.root
 //////////////////////////////////////////////////////////
 
 #ifndef t1_h
@@ -11,11 +11,15 @@
 #include <TROOT.h>
 #include <TChain.h>
 #include <TFile.h>
+#include "SimpleHistSVC.h"
 
 // Header file for the classes stored in the TTree if any.
 
 class t1 {
 public :
+   SimpleHistSVC  *histSvc; //!
+   TFile        *f_out; //!
+
    TTree          *fChain;   //!pointer to the analyzed TTree or TChain
    Int_t           fCurrent; //!current Tree number in a TChain
 
@@ -70,6 +74,8 @@ public :
    Double_t        det_y[5];   //[det_n]
    Double_t        det_z[5];   //[det_n]
    Double_t        det_kine[5];   //[det_n]
+   Int_t           det_VrtxTrackID[5];   //[det_n]
+   Int_t           det_VrtxParticleID[5];   //[det_n]
 
    // List of branches
    TBranch        *b_runID;   //!
@@ -115,8 +121,10 @@ public :
    TBranch        *b_det_y;   //!
    TBranch        *b_det_z;   //!
    TBranch        *b_det_kine;   //!
+   TBranch        *b_det_VrtxTrackID;   //!
+   TBranch        *b_det_VrtxParticleID;   //!
 
-   t1(TTree *tree=0);
+   t1(TTree *tree,TFile *output_file);
    virtual ~t1();
    virtual Int_t    Cut(Long64_t entry);
    virtual Int_t    GetEntry(Long64_t entry);
@@ -130,25 +138,29 @@ public :
 #endif
 
 #ifdef t1_cxx
-t1::t1(TTree *tree) : fChain(0) 
+t1::t1(TTree *tree,TFile *output_file) : fChain(0),f_out(output_file)
 {
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("musr_1003.root");
+      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("musr_1003_gmm1e5_10GeV_1cm.root");
       if (!f || !f->IsOpen()) {
-         f = new TFile("musr_1003.root");
+         f = new TFile("musr_1003_gmm1e5_10GeV_1cm.root");
       }
       f->GetObject("t1",tree);
 
    }
    Init(tree);
+   histSvc = new SimpleHistSVC();
+   histSvc->BookFile(f_out);
 }
 
 t1::~t1()
 {
    if (!fChain) return;
    delete fChain->GetCurrentFile();
+   delete histSvc;
+
 }
 
 Int_t t1::GetEntry(Long64_t entry)
@@ -229,6 +241,8 @@ void t1::Init(TTree *tree)
    fChain->SetBranchAddress("det_y", det_y, &b_det_y);
    fChain->SetBranchAddress("det_z", det_z, &b_det_z);
    fChain->SetBranchAddress("det_kine", det_kine, &b_det_kine);
+   fChain->SetBranchAddress("det_VrtxTrackID", det_VrtxTrackID, &b_det_VrtxTrackID);
+   fChain->SetBranchAddress("det_VrtxParticleID", det_VrtxParticleID, &b_det_VrtxParticleID);
    Notify();
 }
 

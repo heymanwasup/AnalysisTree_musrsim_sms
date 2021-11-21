@@ -3,32 +3,10 @@
 #include <TH2.h>
 #include <TStyle.h>
 #include <TCanvas.h>
+#include "TMath.h"
 
 void t1::Loop()
 {
-//   In a ROOT session, you can do:
-//      root> .L t1.C
-//      root> t1 t
-//      root> t.GetEntry(12); // Fill t data members with entry number 12
-//      root> t.Show();       // Show values of entry 12
-//      root> t.Show(16);     // Read and show values of entry 16
-//      root> t.Loop();       // Loop on all entries
-//
-
-//     This is the loop skeleton where:
-//    jentry is the global entry number in the chain
-//    ientry is the entry number in the current Tree
-//  Note that the argument to GetEntry must be:
-//    jentry for TChain::GetEntry
-//    ientry for TTree::GetEntry and TBranch::GetEntry
-//
-//       To read only selected branches, Insert statements like:
-// METHOD1:
-//    fChain->SetBranchStatus("*",0);  // disable all branches
-//    fChain->SetBranchStatus("branchname",1);  // activate branchname
-// METHOD2: replace line
-//    fChain->GetEntry(jentry);       //read all branches
-//by  b_branchname->GetEntry(ientry); //read only this branch
    if (fChain == 0) return;
 
    Long64_t nentries = fChain->GetEntriesFast();
@@ -39,5 +17,32 @@ void t1::Loop()
       if (ientry < 0) break;
       nb = fChain->GetEntry(jentry);   nbytes += nb;
       // if (Cut(ientry) < 0) continue;
+      for(int nHit=0;nHit<det_n;nHit++) {
+         //only interest at font cap detector               
+         if(det_ID[nHit]!=22) {
+            continue;
+         }         
+         
+         //Currently we only interest at mu-/mu+/gamma      
+         if(det_VrtxParticleID[nHit]==13) {
+            histSvc->SetProcessTag("mu_m");  
+         }
+         else if(det_VrtxParticleID[nHit]==-13) {
+            histSvc->SetProcessTag("mu_p");
+         }
+         else if(det_VrtxParticleID[nHit]==22) {
+            histSvc->SetProcessTag("gamma");
+         }
+         else {
+            continue;
+         }
+
+         float angle_degree = TMath::ATan(det_y[nHit]/200.)*180/3.141592653;
+
+         histSvc->BookFillHist("energy",1000,0,10000,det_kine[nHit]);
+         histSvc->BookFillHist("angle",1000,-90,90,angle_degree);
+      }
    }
+   histSvc->Write();
+
 }
