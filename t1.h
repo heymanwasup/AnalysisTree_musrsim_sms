@@ -12,7 +12,11 @@
 #include <TChain.h>
 #include <TFile.h>
 #include "SimpleHistSVC.h"
+#include <map>
+#include <string>
 
+
+using namespace std;
 // Header file for the classes stored in the TTree if any.
 
 class t1 {
@@ -133,6 +137,12 @@ public :
    virtual void     Loop();
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
+   bool GmmStudy(); //CC
+   bool IrradiationStudy(); //CC
+   map<int,string> PID_to_Name; //CC
+   
+
+
 };
 
 #endif
@@ -153,6 +163,49 @@ t1::t1(TTree *tree,TFile *output_file) : fChain(0),f_out(output_file)
    Init(tree);
    histSvc = new SimpleHistSVC();
    histSvc->BookFile(f_out);
+   //sed -e 's/\[.*\]//g; s/^/PID_to_Name\[/g;s/ /\] = \"/g; s/$/\"\;/g' PID.txt  |sort -u 
+   PID_to_Name[1000010020] = "deuteron";
+   PID_to_Name[1000010030] = "triton";
+   PID_to_Name[1000020030] = "He3";
+   PID_to_Name[1000020040] = "alpha";
+   PID_to_Name[1000030040] = "Li4";
+   PID_to_Name[1000030060] = "Li6";
+   PID_to_Name[1000030070] = "Li7";
+   PID_to_Name[1000040070] = "Be7";
+   PID_to_Name[1000040080] = "Be8";
+   PID_to_Name[1000040090] = "Be9";
+   PID_to_Name[1000040100] = "Be10";
+   PID_to_Name[1000050090] = "B9";
+   PID_to_Name[1000050100] = "B10";
+   PID_to_Name[1000050109] = "B10";
+   PID_to_Name[1000050110] = "B11";
+   PID_to_Name[1000060110] = "C11";
+   PID_to_Name[1000060120] = "C12";
+   PID_to_Name[1000060130] = "C13";
+   PID_to_Name[1000070130] = "N13";
+   PID_to_Name[1000090180] = "F18";
+   PID_to_Name[1000100200] = "Ne20";
+   PID_to_Name[1000100210] = "Ne21";
+   PID_to_Name[1000100220] = "Ne22";
+   PID_to_Name[1000110229] = "Na22";
+   PID_to_Name[1000110230] = "Na23";
+   PID_to_Name[1000120240] = "Mg24";
+   PID_to_Name[1000120250] = "Mg25";
+   PID_to_Name[1000120259] = "Mg25";
+   PID_to_Name[1000120260] = "Mg26";
+   PID_to_Name[1000130260] = "Al26";
+   PID_to_Name[1000130269] = "Al26";
+   PID_to_Name[1000130270] = "Al27";
+   PID_to_Name[2112] = "neutron";
+   PID_to_Name[-211] = "pi-";
+   PID_to_Name[211] = "pi+";
+   PID_to_Name[2212] = "proton";
+   PID_to_Name[13] = "mu_m";
+   PID_to_Name[-13] = "mu_p";
+   PID_to_Name[11] = "e_m";
+   PID_to_Name[-11] = "e_p";
+   PID_to_Name[22] = "gamma";
+
 }
 
 t1::~t1()
