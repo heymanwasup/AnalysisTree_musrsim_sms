@@ -23,3 +23,7 @@ make
 ```
 
 #### Run an example script
+An simple example to make histograms about the irradiational study
+```
+source ./run_example.sh
+```
