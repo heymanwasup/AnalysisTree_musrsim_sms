@@ -8,9 +8,16 @@ https://github.com/kimsiang/musrsim-sms
 
 ## Usage
 
+#### Download and compile this package
+
 ```
 git clone https://github.com/heymanwasup/AnalysisTree_musrsim_sms.git
 cd AnalysisTree_musrsim_sms
 make
-./main.exe /path/to/input.root /path/to/output.root
+```
+
+#### Run with specifed input file, output file and analysis method
+
+```
+./main.exe -i /path/to/input.root -o /path/to/output.root -m analysis_method
 ```
