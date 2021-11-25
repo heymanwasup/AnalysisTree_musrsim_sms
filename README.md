@@ -21,3 +21,5 @@ make
 ```
 ./main.exe -i /path/to/input.root -o /path/to/output.root -m analysis_method
 ```
+
+#### Run an example script
