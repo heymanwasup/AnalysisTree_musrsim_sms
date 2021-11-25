@@ -52,36 +52,7 @@ public :
    Int_t           runID;
    Int_t           eventID;
    Double_t        timeToNextEvent;
-   Double_t        BFieldAtDecay_Bx;
-   Double_t        BFieldAtDecay_By;
-   Double_t        BFieldAtDecay_Bz;
-   Double_t        BFieldAtDecay_B3;
-   Double_t        BFieldAtDecay_B4;
-   Double_t        BFieldAtDecay_B5;
-   Double_t        muIniTime;
-   Double_t        muIniPosX;
-   Double_t        muIniPosY;
-   Double_t        muIniPosZ;
-   Double_t        muIniMomX;
-   Double_t        muIniMomY;
-   Double_t        muIniMomZ;
-   Double_t        muIniPolX;
-   Double_t        muIniPolY;
-   Double_t        muIniPolZ;
-   Int_t           muDecayDetID;
-   Double_t        muDecayPosX;
-   Double_t        muDecayPosY;
-   Double_t        muDecayPosZ;
-   Double_t        muDecayTime;
-   Double_t        muDecayPolX;
-   Double_t        muDecayPolY;
-   Double_t        muDecayPolZ;
-   Double_t        muTargetMomX;
-   Double_t        muTargetMomY;
-   Double_t        muTargetMomZ;
-   Double_t        posIniMomX;
-   Double_t        posIniMomY;
-   Double_t        posIniMomZ;
+   
    Int_t           det_n;
    Int_t           det_ID[det_n_max];   //[det_n]
    Double_t        det_edep[det_n_max];   //[det_n]
@@ -111,28 +82,6 @@ public :
    TBranch        *b_runID;   //!
    TBranch        *b_eventID;   //!
    TBranch        *b_timeToNextEvent;   //!
-   TBranch        *b_BFieldAtDecay;   //!
-   TBranch        *b_muIniTime;   //!
-   TBranch        *b_muIniPosX;   //!
-   TBranch        *b_muIniPosY;   //!
-   TBranch        *b_muIniPosZ;   //!
-   TBranch        *b_muIniMomX;   //!
-   TBranch        *b_muIniMomY;   //!
-   TBranch        *b_muIniMomZ;   //!
-   TBranch        *b_muIniPolX;   //!
-   TBranch        *b_muIniPolY;   //!
-   TBranch        *b_muIniPolZ;   //!
-   TBranch        *b_muDecayDetID;   //!
-   TBranch        *b_muDecayPosX;   //!
-   TBranch        *b_muDecayPosY;   //!
-   TBranch        *b_muDecayPosZ;   //!
-   TBranch        *b_muDecayTime;   //!
-   TBranch        *b_muDecayPolX;   //!
-   TBranch        *b_muDecayPolY;   //!
-   TBranch        *b_muDecayPolZ;   //!
-   TBranch        *b_muTargetMomX;   //!
-   TBranch        *b_muTargetMomY;   //!
-   TBranch        *b_muTargetMomZ;   //!
    TBranch        *b_posIniMomX;   //!
    TBranch        *b_posIniMomY;   //!
    TBranch        *b_posIniMomZ;   //!
@@ -306,32 +255,8 @@ void t1::Init(TTree *tree)
 
    fChain->SetBranchAddress("runID", &runID, &b_runID);
    fChain->SetBranchAddress("eventID", &eventID, &b_eventID);
-   fChain->SetBranchAddress("timeToNextEvent", &timeToNextEvent, &b_timeToNextEvent);
-   fChain->SetBranchAddress("BFieldAtDecay", &BFieldAtDecay_Bx, &b_BFieldAtDecay);
-   fChain->SetBranchAddress("muIniTime", &muIniTime, &b_muIniTime);
-   fChain->SetBranchAddress("muIniPosX", &muIniPosX, &b_muIniPosX);
-   fChain->SetBranchAddress("muIniPosY", &muIniPosY, &b_muIniPosY);
-   fChain->SetBranchAddress("muIniPosZ", &muIniPosZ, &b_muIniPosZ);
-   fChain->SetBranchAddress("muIniMomX", &muIniMomX, &b_muIniMomX);
-   fChain->SetBranchAddress("muIniMomY", &muIniMomY, &b_muIniMomY);
-   fChain->SetBranchAddress("muIniMomZ", &muIniMomZ, &b_muIniMomZ);
-   fChain->SetBranchAddress("muIniPolX", &muIniPolX, &b_muIniPolX);
-   fChain->SetBranchAddress("muIniPolY", &muIniPolY, &b_muIniPolY);
-   fChain->SetBranchAddress("muIniPolZ", &muIniPolZ, &b_muIniPolZ);
-   fChain->SetBranchAddress("muDecayDetID", &muDecayDetID, &b_muDecayDetID);
-   fChain->SetBranchAddress("muDecayPosX", &muDecayPosX, &b_muDecayPosX);
-   fChain->SetBranchAddress("muDecayPosY", &muDecayPosY, &b_muDecayPosY);
-   fChain->SetBranchAddress("muDecayPosZ", &muDecayPosZ, &b_muDecayPosZ);
-   fChain->SetBranchAddress("muDecayTime", &muDecayTime, &b_muDecayTime);
-   fChain->SetBranchAddress("muDecayPolX", &muDecayPolX, &b_muDecayPolX);
-   fChain->SetBranchAddress("muDecayPolY", &muDecayPolY, &b_muDecayPolY);
-   fChain->SetBranchAddress("muDecayPolZ", &muDecayPolZ, &b_muDecayPolZ);
-   fChain->SetBranchAddress("muTargetMomX", &muTargetMomX, &b_muTargetMomX);
-   fChain->SetBranchAddress("muTargetMomY", &muTargetMomY, &b_muTargetMomY);
-   fChain->SetBranchAddress("muTargetMomZ", &muTargetMomZ, &b_muTargetMomZ);
-   fChain->SetBranchAddress("posIniMomX", &posIniMomX, &b_posIniMomX);
-   fChain->SetBranchAddress("posIniMomY", &posIniMomY, &b_posIniMomY);
-   fChain->SetBranchAddress("posIniMomZ", &posIniMomZ, &b_posIniMomZ);
+   fChain->SetBranchAddress("timeToNextEvent", &timeToNextEvent, &b_timeToNextEvent);   
+   
    fChain->SetBranchAddress("det_n", &det_n, &b_det_n);
    fChain->SetBranchAddress("det_ID", det_ID, &b_det_ID);
    fChain->SetBranchAddress("det_edep", det_edep, &b_det_edep);
