@@ -12,7 +12,8 @@ class SimpleHistSVC {
         std::map<std::string,TH2F *> histsDB_2d;
         std::string processName;
         std::string detectorName;
-        TFile *output_file;    
+        std::string prodName;
+        TFile *output_file;
     
     public:
         SimpleHistSVC();
@@ -21,9 +22,14 @@ class SimpleHistSVC {
         void BookFillHist(std::string name, int nbinsX, float startX, float endX, int nbinsY, float startY, float endY,float x, float y);
         void SetProcessTag(std::string name);
         void SetDetectorTag(std::string name);
+        void SetProdTag(std::string name);
+    
         void Init();
         void InitNameSvc();
         void BookFile(TFile *file);
         void Write();
+
+    protected:
+        std::string getFullName(std::string name);
 };
 #endif

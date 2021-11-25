@@ -4,39 +4,61 @@ Log        = submit_condor.log
 Output     = logs/condor.$(Process).out
 Error      = logs/condor.$(Process).error
 
-#baseline
-Arguments = 1p2GeV_1cm_gmm1
-Queue
-
-#low gmm control sample
-Arguments = 1p2GeV_1cm_gmm1em4
-Queue
-
-#thickness scan
-Arguments = 1p2GeV_0p5cm_gmm1e4
-Queue
-Arguments = 1p2GeV_1cm_gmm1e4
-Queue
-Arguments = 1p2GeV_1p5cm_gmm1e4
-Queue
-Arguments = 1p2GeV_2cm_gmm1e4
-Queue
-Arguments = 1p2GeV_3cm_gmm1e4
-Queue
-Arguments = 1p2GeV_4cm_gmm1e4
-Queue
-Arguments = 1p2GeV_5cm_gmm1e4
-Queue
-Arguments = 1p2GeV_6cm_gmm1e4
+#real geometry radiation study
+Arguments = Laser
 Queue
 
 
-#beam energy scan
-#Arguments = 1p2GeV_1cm_gmm1e4
-#Queue
-Arguments = 2p5GeV_1cm_gmm1e4
-Queue
-Arguments = 5GeV_1cm_gmm1e4
-Queue
-Arguments = 10GeV_1cm_gmm1e4
-Queue
+#gmm scale scan
+# Arguments = gmmStudy_1p2GeV_1cm_gmm1e3
+# Queue
+
+# Arguments = gmmStudy_1p2GeV_1cm_gmm1e4
+# Queue
+
+# Arguments = gmmStudy_1p2GeV_1cm_gmm1e5
+# Queue
+
+# Arguments = gmmStudy_1p2GeV_1cm_gmm1e6
+# Queue
+
+# Arguments = gmmStudy_1p2GeV_1cm_gmm1e7
+# Queue
+
+
+# #baseline
+# Arguments = 1p2GeV_1cm_gmm1
+# Queue
+
+# #low gmm control sample
+# Arguments = 1p2GeV_1cm_gmm1em4
+# Queue
+
+# #thickness scan
+# Arguments = 1p2GeV_0p5cm_gmm1e4
+# Queue
+# Arguments = 1p2GeV_1cm_gmm1e4
+# Queue
+# Arguments = 1p2GeV_1p5cm_gmm1e4
+# Queue
+# Arguments = 1p2GeV_2cm_gmm1e4
+# Queue
+# Arguments = 1p2GeV_3cm_gmm1e4
+# Queue
+# Arguments = 1p2GeV_4cm_gmm1e4
+# Queue
+# Arguments = 1p2GeV_5cm_gmm1e4
+# Queue
+# Arguments = 1p2GeV_6cm_gmm1e4
+# Queue
+
+
+# #beam energy scan
+# #Arguments = 1p2GeV_1cm_gmm1e4
+# #Queue
+# Arguments = 2p5GeV_1cm_gmm1e4
+# Queue
+# Arguments = 5GeV_1cm_gmm1e4
+# Queue
+# Arguments = 10GeV_1cm_gmm1e4
+# Queue

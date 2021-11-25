@@ -1,9 +1,21 @@
 #include "SimpleHistSVC.h"
 #include <iostream>
 
+std::string SimpleHistSVC::getFullName(std::string name) {
+
+    std::string fullname = name;
+    if(processName!="") fullname = processName + "_" + fullname;
+    if(prodName!="") fullname = prodName + "_" + fullname;
+    if(detectorName!="") fullname = detectorName + "_" + fullname;
+
+    return fullname;
+
+}
+
 SimpleHistSVC::SimpleHistSVC() {
     Init();
 }
+
 SimpleHistSVC::~SimpleHistSVC() {
     // std::cout << "call ~SimpleHistSVC()" << std::endl;
     // for(auto itr : histsDB_1d) {
@@ -25,14 +37,12 @@ void SimpleHistSVC::SetDetectorTag(std::string name) {
     detectorName = name;
 }
 
-void SimpleHistSVC::BookFillHist(std::string name, int nbins, float start, float end, float value) {
-    
-    std::string fullname = processName + "_" + name;
-    if(detectorName!=std::string("")) {
-        fullname = detectorName + "_" + processName + "_" + name;
-    }
-    
+void SimpleHistSVC::SetProdTag(std::string name) {
+    prodName = name;
+}
 
+void SimpleHistSVC::BookFillHist(std::string name, int nbins, float start, float end, float value) {
+    std::string fullname = getFullName(name);
     std::map<std::string,TH1F*>::iterator itr = histsDB_1d.find(fullname);
     
     TH1F * hist;
@@ -50,10 +60,8 @@ void SimpleHistSVC::BookFillHist(std::string name, int nbins, float start, float
 }
 
 void SimpleHistSVC::BookFillHist(std::string name, int nbinsX, float startX, float endX, int nbinsY, float startY, float endY,float x, float y) {    
-    std::string fullname = processName + "_" + name;
-    if(detectorName!=std::string("")) {
-        fullname = detectorName + "_" + processName + "_" + name;
-    }
+    std::string fullname = getFullName(name);
+    
     auto itr = histsDB_2d.find(fullname);
     TH2F * hist;
     if(itr == histsDB_2d.end()) {
@@ -90,6 +98,7 @@ void SimpleHistSVC::Init() {
 }
 
 void SimpleHistSVC::InitNameSvc() {
-    processName = std::string("hist");
+    processName = std::string("");
     detectorName = std::string("");
+    prodName = std::string("");
 }

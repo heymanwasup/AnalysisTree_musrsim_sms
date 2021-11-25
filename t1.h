@@ -14,15 +14,34 @@
 #include "SimpleHistSVC.h"
 #include <map>
 #include <string>
+#include <iostream>
+
+#define det_n_max 100
 
 
 using namespace std;
 // Header file for the classes stored in the TTree if any.
 
 class t1 {
+public:
+   bool GmmStudy(); //CC
+   bool IrradiationStudy(); //CC
+   bool RealGeometryIrradiation(); //CC
+   bool RealGeometryGmm(); //CC
+   void BookMethod(string method_name); //CC
+   bool (t1::*func_anlysis_method)(); //CC
+   
+
+protected: 
+   map<int,string> PID_to_Name; //CC
+   map<int,string> ProcessIDMapping; //CC
+   
+
+
 public :
    SimpleHistSVC  *histSvc; //!
-   TFile        *f_out; //!
+   TFile          *f_out; //!
+   
 
    TTree          *fChain;   //!pointer to the analyzed TTree or TChain
    Int_t           fCurrent; //!current Tree number in a TChain
@@ -64,22 +83,29 @@ public :
    Double_t        posIniMomY;
    Double_t        posIniMomZ;
    Int_t           det_n;
-   Int_t           det_ID[5];   //[det_n]
-   Double_t        det_edep[5];   //[det_n]
-   Double_t        det_edep_el[5];   //[det_n]
-   Double_t        det_edep_pos[5];   //[det_n]
-   Double_t        det_edep_gam[5];   //[det_n]
-   Double_t        det_edep_mup[5];   //[det_n]
-   Int_t           det_nsteps[5];   //[det_n]
-   Double_t        det_length[5];   //[det_n]
-   Double_t        det_time_start[5];   //[det_n]
-   Double_t        det_time_end[5];   //[det_n]
-   Double_t        det_x[5];   //[det_n]
-   Double_t        det_y[5];   //[det_n]
-   Double_t        det_z[5];   //[det_n]
-   Double_t        det_kine[5];   //[det_n]
-   Int_t           det_VrtxTrackID[5];   //[det_n]
-   Int_t           det_VrtxParticleID[5];   //[det_n]
+   Int_t           det_ID[det_n_max];   //[det_n]
+   Double_t        det_edep[det_n_max];   //[det_n]
+   Double_t        det_edep_el[det_n_max];   //[det_n]
+   Double_t        det_edep_pos[det_n_max];   //[det_n]
+   Double_t        det_edep_gam[det_n_max];   //[det_n]
+   Double_t        det_edep_mup[det_n_max];   //[det_n]
+   Int_t           det_nsteps[det_n_max];   //[det_n]
+   Double_t        det_length[det_n_max];   //[det_n]
+   Double_t        det_time_start[det_n_max];   //[det_n]
+   Double_t        det_time_end[det_n_max];   //[det_n]
+   Double_t        det_x[det_n_max];   //[det_n]
+   Double_t        det_y[det_n_max];   //[det_n]
+   Double_t        det_z[det_n_max];   //[det_n]
+   Double_t        det_kine[det_n_max];   //[det_n]
+   Int_t           det_VrtxTrackID[det_n_max];   //[det_n]
+   Int_t           det_VrtxParticleID[det_n_max];   //[det_n]
+
+   Int_t           det_VrtxProcID[det_n_max];   //[det_n]
+   
+   Double_t        det_VvvKine[det_n_max];   //[det_n]
+   Int_t           det_VvvProcID[det_n_max];   //[det_n]
+   Int_t           det_VvvTrackID[det_n_max];   //[det_n]
+   Int_t           det_VvvParticleID[det_n_max];   //[det_n]
 
    // List of branches
    TBranch        *b_runID;   //!
@@ -124,9 +150,20 @@ public :
    TBranch        *b_det_x;   //!
    TBranch        *b_det_y;   //!
    TBranch        *b_det_z;   //!
-   TBranch        *b_det_kine;   //!
+   TBranch        *b_det_kine;   //!   
+   
+
+
+   TBranch        *b_det_VrtxKine;   //!
+   TBranch        *b_det_VrtxProcID;   //!
    TBranch        *b_det_VrtxTrackID;   //!
    TBranch        *b_det_VrtxParticleID;   //!
+   TBranch        *b_det_VvvKine;   //!
+   TBranch        *b_det_VvvProcID;   //!
+   TBranch        *b_det_VvvTrackID;   //!
+   TBranch        *b_det_VvvParticleID;   //!
+
+
 
    t1(TTree *tree,TFile *output_file);
    virtual ~t1();
@@ -137,9 +174,8 @@ public :
    virtual void     Loop();
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
-   bool GmmStudy(); //CC
-   bool IrradiationStudy(); //CC
-   map<int,string> PID_to_Name; //CC
+
+
    
 
 
@@ -148,7 +184,7 @@ public :
 #endif
 
 #ifdef t1_cxx
-t1::t1(TTree *tree,TFile *output_file) : fChain(0),f_out(output_file)
+t1::t1(TTree *tree,TFile *output_file) : fChain(0), f_out(output_file)
 {
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
@@ -206,6 +242,23 @@ t1::t1(TTree *tree,TFile *output_file) : fChain(0),f_out(output_file)
    PID_to_Name[-11] = "e_p";
    PID_to_Name[22] = "gamma";
 
+   ProcessIDMapping[1] = "DecayWithSpin";
+   ProcessIDMapping[2] = "eIoni";
+   ProcessIDMapping[3] = "eBrem";
+   ProcessIDMapping[4] = "annihil";
+   ProcessIDMapping[5] = "LowEnCompton";
+   ProcessIDMapping[6] = "LowEnConversion";
+   ProcessIDMapping[7] = "LowEnBrem";
+   ProcessIDMapping[8] = "LowEnergyIoni";
+   ProcessIDMapping[9] = "LowEnPhotoElec";
+   ProcessIDMapping[10] = "RadioactiveDecay";
+   ProcessIDMapping[11] = "muIoni";
+   ProcessIDMapping[12] = "MuFormation";
+   ProcessIDMapping[13] = "Decay";
+   ProcessIDMapping[14] = "conv";
+   ProcessIDMapping[15] = "compt";
+   ProcessIDMapping[16] = "phot";
+   ProcessIDMapping[100] = "initialParticle";
 }
 
 t1::~t1()
@@ -296,6 +349,13 @@ void t1::Init(TTree *tree)
    fChain->SetBranchAddress("det_kine", det_kine, &b_det_kine);
    fChain->SetBranchAddress("det_VrtxTrackID", det_VrtxTrackID, &b_det_VrtxTrackID);
    fChain->SetBranchAddress("det_VrtxParticleID", det_VrtxParticleID, &b_det_VrtxParticleID);
+
+   fChain->SetBranchAddress("det_kine", det_kine, &b_det_kine);   
+   fChain->SetBranchAddress("det_VrtxProcID", det_VrtxProcID, &b_det_VrtxProcID);
+   fChain->SetBranchAddress("det_VvvKine", det_VvvKine, &b_det_VvvKine);
+   fChain->SetBranchAddress("det_VvvProcID", det_VvvProcID, &b_det_VvvProcID);
+   fChain->SetBranchAddress("det_VvvTrackID", det_VvvTrackID, &b_det_VvvTrackID);
+   fChain->SetBranchAddress("det_VvvParticleID", det_VvvParticleID, &b_det_VvvParticleID);
    Notify();
 }
 
@@ -323,5 +383,8 @@ Int_t t1::Cut(Long64_t entry)
 // returns  1 if entry is accepted.
 // returns -1 otherwise.
    return 1;
+}
+
+void t1::BookMethod(string method_name) {   
 }
 #endif // #ifdef t1_cxx
