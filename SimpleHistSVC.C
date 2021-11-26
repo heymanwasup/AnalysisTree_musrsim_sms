@@ -4,8 +4,8 @@
 std::string SimpleHistSVC::getFullName(std::string name) {
 
     std::string fullname = name;
+    if(particleName!="") fullname = particleName + "_" + fullname;
     if(processName!="") fullname = processName + "_" + fullname;
-    if(prodName!="") fullname = prodName + "_" + fullname;
     if(detectorName!="") fullname = detectorName + "_" + fullname;
 
     return fullname;
@@ -29,16 +29,16 @@ SimpleHistSVC::~SimpleHistSVC() {
     histsDB_2d.clear();
 }
 
-void SimpleHistSVC::SetProcessTag(std::string name) {
-    processName = name;
+void SimpleHistSVC::SetParticleTag(std::string name) {
+    particleName = name;
 }
 
 void SimpleHistSVC::SetDetectorTag(std::string name) {
     detectorName = name;
 }
 
-void SimpleHistSVC::SetProdTag(std::string name) {
-    prodName = name;
+void SimpleHistSVC::SetProcessTag(std::string name) {
+    processName = name;
 }
 
 void SimpleHistSVC::BookFillHist(std::string name, int nbins, float start, float end, float value) {
@@ -98,7 +98,7 @@ void SimpleHistSVC::Init() {
 }
 
 void SimpleHistSVC::InitNameSvc() {
-    processName = std::string("");
+    particleName = std::string("");
     detectorName = std::string("");
-    prodName = std::string("");
+    processName = std::string("");
 }
