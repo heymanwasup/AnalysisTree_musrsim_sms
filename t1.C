@@ -23,7 +23,6 @@ bool t1::GmmStudy() {
         else {
             histSvc->SetParticleTag("UnknownPID");
         }
-
         float angle_degree = TMath::ATan(det_y[nHit]/200.)*180/3.141592653;
 
         histSvc->BookFillHist("energy",1000,0,10000,det_kine[nHit]);
