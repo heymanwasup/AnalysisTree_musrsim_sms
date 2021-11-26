@@ -13,7 +13,7 @@ bool t1::GmmStudy() {
 
     for(int nHit=0;nHit<det_n;nHit++) {
         //only interest at font cap detector
-        if(det_ID[nHit]!=22) {
+        if(det_ID[nHit]!=21) {
             continue;
         }
 
@@ -23,10 +23,12 @@ bool t1::GmmStudy() {
         else {
             histSvc->SetParticleTag("UnknownPID");
         }
-        float angle_degree = TMath::ATan(det_y[nHit]/200.)*180/3.141592653;
+        float angle_x = TMath::ATan(det_x[nHit]/det_z[nHit])*180/TMath::Pi();
+        float theta = TMath::ACos(det_z[nHit] / TMath::Sqrt(TMath::Power(det_x[nHit], 2) + TMath::Power(det_y[nHit], 2))) * 180 / TMath::Pi();
 
         histSvc->BookFillHist("energy",1000,0,10000,det_kine[nHit]);
-        histSvc->BookFillHist("angle",1000,-90,90,angle_degree);
+        histSvc->BookFillHist("angle_x",1000,-90,90,angle_x);
+        histSvc->BookFillHist("theta", 1000, 0, 180, theta);
     }
     return true;
 }
