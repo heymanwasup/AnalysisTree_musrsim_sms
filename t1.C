@@ -24,7 +24,7 @@ bool t1::GmmStudy() {
             histSvc->SetParticleTag("UnknownPID");
         }
         float angle_x = TMath::ATan(det_x[nHit]/det_z[nHit])*180/TMath::Pi();
-        float theta = TMath::ACos(det_z[nHit] / TMath::Sqrt(TMath::Power(det_x[nHit], 2) + TMath::Power(det_y[nHit], 2))) * 180 / TMath::Pi();
+        float theta = TMath::ACos(det_z[nHit] / TMath::Sqrt(TMath::Power(det_x[nHit], 2) + TMath::Power(det_y[nHit], 2) + TMath::Power(det_z[nHit], 2))) * 180 / TMath::Pi();
 
         histSvc->BookFillHist("energy",1000,0,10000,det_kine[nHit]);
         histSvc->BookFillHist("angle_x",1000,-90,90,angle_x);
