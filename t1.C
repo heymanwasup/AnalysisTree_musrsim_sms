@@ -77,40 +77,40 @@ bool t1::RealGeometry_1p2GeV()
       FillHists(nHit,process_weight);
 
       //(detector)_(particle)_(variable)
-      histSvc->SetProcessTag(particleName);
+      histSvc->SetParticleTag(particleName);
       FillHists(nHit,process_weight);
 
       //(detector)_(process)_(particle)_(variable)
-      histSvc->SetProdTag(processName);      
+      histSvc->SetProcessTag(processName);      
       FillHists(nHit,process_weight);
 
       //(detector)_(process)_(particle)_From_(parent)_(variable)
-      histSvc->SetProcessTag(particleName+"_From_"+parentParticleName);
+      histSvc->SetParticleTag(particleName+"_From_"+parentParticleName);
       FillHists(nHit,process_weight);
 
       //(detector)_From_(parent process)_(particle)_From_(parent)_(variable)      
-      histSvc->SetProdTag("From_"+parentProcessName);      
+      histSvc->SetProcessTag("From_"+parentProcessName);      
       FillHists(nHit,process_weight);
 
       //(detector)_(process)_From_(parent process)_(particle)_From_(parent)_(variable)      
-      histSvc->SetProdTag(processName+"_From_"+parentProcessName);
+      histSvc->SetProcessTag(processName+"_From_"+parentProcessName);
       FillHists(nHit,process_weight);
 
       //(detector)_(process)_From_(parent process)_(particle)_(variable)      
-      histSvc->SetProcessTag(particleName);
+      histSvc->SetParticleTag(particleName);
       FillHists(nHit,process_weight);
 
 
       //(detector)_From_(parent process)_(particle)_(variable)
-      histSvc->SetProdTag("From_"+parentProcessName);
+      histSvc->SetProcessTag("From_"+parentProcessName);
       FillHists(nHit,process_weight);
 
       //(detector)_From_(parent process)_(variable)
-      histSvc->SetProcessTag("");
+      histSvc->SetParticleTag("");
       FillHists(nHit,process_weight);
 
       //(detector)_(process)_(variable)
-      histSvc->SetProdTag(processName);
+      histSvc->SetProcessTag(processName);
       FillHists(nHit,process_weight);
    }
    return true;
@@ -119,26 +119,25 @@ bool t1::RealGeometry_1p2GeV()
 
 //Make histograms about gmm study
 bool t1::GmmStudy() {
-   
-   for(int nHit=0;nHit<det_n;nHit++) {
-      //only interest at font cap detector
-      if(det_ID[nHit]!=22) {
-         continue;
-      }         
 
-      if(PID_to_Name.find(det_VrtxParticleID[nHit])!=PID_to_Name.end()) {         
-         histSvc->SetProcessTag(PID_to_Name[det_VrtxParticleID[nHit]]);
-      }
-      else {
-         histSvc->SetProcessTag("UnknownPID");
-      }
+    for(int nHit=0;nHit<det_n;nHit++) {
+        //only interest at font cap detector
+        if(det_ID[nHit]!=22) {
+            continue;
+        }
 
-      float angle_degree = TMath::ATan(det_y[nHit]/200.)*180/3.141592653;
+        if(PID_to_Name.find(det_VrtxParticleID[nHit])!=PID_to_Name.end()) {
+            histSvc->SetParticleTag(PID_to_Name[det_VrtxParticleID[nHit]]);
+        }
+        else {
+            histSvc->SetParticleTag("UnknownPID");
+        }
+        float angle_degree = TMath::ATan(det_y[nHit]/200.)*180/3.141592653;
 
-      histSvc->BookFillHist("energy",1000,0,10000,det_kine[nHit]);
-      histSvc->BookFillHist("angle",1000,-90,90,angle_degree);
-   }
-   return true;
+        histSvc->BookFillHist("energy",1000,0,10000,det_kine[nHit]);
+        histSvc->BookFillHist("angle",1000,-90,90,angle_degree);
+    }
+    return true;
 }
 
 //Make histograms about irradiation study
@@ -146,101 +145,100 @@ bool t1::GmmStudy() {
 //then continued with a Al plate with 1cm thickness
 bool t1::IrradiationStudy()
 {
-   
-   for(int nHit=0;nHit<det_n;nHit++) {
-      if(PID_to_Name.find(det_VrtxParticleID[nHit])!=PID_to_Name.end()) {         
-         histSvc->SetProcessTag(PID_to_Name[det_VrtxParticleID[nHit]]);
-      }
-      else {
-         histSvc->SetProcessTag("UnknownPID");
-      }
 
-      if(det_VrtxParticleID[nHit]==22) {
-         // cout << "gamma e = " << det_kine[nHit] << endl;
-      }
+    for(int nHit=0;nHit<det_n;nHit++) {
+        if(PID_to_Name.find(det_VrtxParticleID[nHit])!=PID_to_Name.end()) {
+            histSvc->SetParticleTag(PID_to_Name[det_VrtxParticleID[nHit]]);
+        }
+        else {
+            histSvc->SetParticleTag("UnknownPID");
+        }
 
-      //Injected electrons distributions
-      if(det_ID[nHit]==20) {
-         histSvc->SetDetectorTag("Injected");                  
-      }
-      //After Cu plate
-      else if(det_ID[nHit]==21) {
-         histSvc->SetDetectorTag("AfterCu");
-      }
-      //After Al plate
-      else if(det_ID[nHit]==24) {
-         histSvc->SetDetectorTag("AfterAl");
-      }
-      //our scintillator
-      else if(det_ID[nHit]==22) {
-         histSvc->SetDetectorTag("Detector");
-      }
-      else {
-         continue;
-      }
+        if(det_VrtxParticleID[nHit]==22) {
+            // cout << "gamma e = " << det_kine[nHit] << endl;
+        }
 
-      // float angle_degree = TMath::ATan(det_y[nHit]/200.)*180/3.141592653;
+        //Injected electrons distributions
+        if(det_ID[nHit]==20) {
+            histSvc->SetDetectorTag("Injected");
+        }
+            //After Cu plate
+        else if(det_ID[nHit]==21) {
+            histSvc->SetDetectorTag("AfterCu");
+        }
+            //After Al plate
+        else if(det_ID[nHit]==24) {
+            histSvc->SetDetectorTag("AfterAl");
+        }
+            //our scintillator
+        else if(det_ID[nHit]==22) {
+            histSvc->SetDetectorTag("Detector");
+        }
+        else {
+            continue;
+        }
 
-      histSvc->BookFillHist("energy",1000,0,500,det_kine[nHit]);
-      histSvc->BookFillHist("edep",1000,0,500,det_edep[nHit]);
-      // histSvc->BookFillHist("angle",1000,-90,90,angle_degree);
-      histSvc->BookFillHist("xy",100,-20,20,100,-20,20,det_x[nHit],det_y[nHit]);      
-   }
-   return true;
+        // float angle_degree = TMath::ATan(det_y[nHit]/200.)*180/3.141592653;
+
+        histSvc->BookFillHist("energy",1000,0,500,det_kine[nHit]);
+        histSvc->BookFillHist("edep",1000,0,500,det_edep[nHit]);
+        // histSvc->BookFillHist("angle",1000,-90,90,angle_degree);
+        histSvc->BookFillHist("xy",100,-20,20,100,-20,20,det_x[nHit],det_y[nHit]);
+    }
+    return true;
 }
 
 
 //Gmumu study based on real geometry
 bool t1::RealGeometryGmm()
 {
-   //mu_p and mu_m share a same vertex, so only draw once per event
-   // bool vertexKineDraw = false; 
-   for(int nHit=0;nHit<det_n;nHit++) {
+    //mu_p and mu_m share a same vertex, so only draw once per event
+    // bool vertexKineDraw = false;
+    for(int nHit=0;nHit<det_n;nHit++) {
 
-      if(PID_to_Name.find(det_VrtxParticleID[nHit])!=PID_to_Name.end()) {
-         histSvc->SetProcessTag(PID_to_Name[det_VrtxParticleID[nHit]]);
-      }
-      else {
-         histSvc->SetProcessTag("UnknownPID");
-         cout << "UnknownParticle "<< det_VrtxParticleID[nHit] << endl;
-      }
+        if(PID_to_Name.find(det_VrtxParticleID[nHit])!=PID_to_Name.end()) {
+            histSvc->SetParticleTag(PID_to_Name[det_VrtxParticleID[nHit]]);
+        }
+        else {
+            histSvc->SetParticleTag("UnknownPID");
+        }
 
-      //DRZ1 monitering the injected electrons
-      if(det_ID[nHit]==4) {
-         histSvc->SetDetectorTag("DRZ1");
-      }
+        //DRZ1 monitering the injected electrons
+        if(det_ID[nHit]==4) {
+            histSvc->SetDetectorTag("DRZ1");
+        }
 
-      //DRZ2 monitering the electron beams after magnets
-      else if(det_ID[nHit]==7) {
-         histSvc->SetDetectorTag("DRZ2");
-      }
-      //Out scintillator
-      else if(det_ID[nHit]==10) {
-         histSvc->SetDetectorTag("Detector");
-      }
-      else {
-         continue;
-      }
+            //DRZ2 monitering the electron beams after magnets
+        else if(det_ID[nHit]==7) {
+            histSvc->SetDetectorTag("DRZ2");
+        }
+            //Out scintillator
+        else if(det_ID[nHit]==10) {
+            histSvc->SetDetectorTag("Detector");
+        }
+        else {
+            continue;
+        }
 
-      // float angle_degree = TMath::ATan(det_y[nHit]/200.)*180/3.141592653;
+        // float angle_degree = TMath::ATan(det_y[nHit]/200.)*180/3.141592653;
 
-      histSvc->BookFillHist("energy",1000,0,500,det_kine[nHit]);
-      histSvc->BookFillHist("edep",1000,0,500,det_edep[nHit]);      
-      histSvc->BookFillHist("xy",1000,-300,300,1000,-200,200,det_x[nHit],det_y[nHit]);
+        histSvc->BookFillHist("energy",1000,0,500,det_kine[nHit]);
+        histSvc->BookFillHist("edep",1000,0,500,det_edep[nHit]);
+        histSvc->BookFillHist("xy",1000,-300,300,1000,-200,200,det_x[nHit],det_y[nHit]);
 
 
-      if(ProcessIDMapping.find(det_VrtxProcID[nHit])!=ProcessIDMapping.end()) {
-         histSvc->SetProdTag(ProcessIDMapping[det_VrtxProcID[nHit]]);
-      }
-      else {
-         histSvc->SetProdTag("UnknownProd");  
-      }
-      // histSvc->SetProcessTag("");
-      histSvc->BookFillHist("energy",1000,0,500,det_kine[nHit]);
-      histSvc->BookFillHist("edep",1000,0,500,det_edep[nHit]);
-      histSvc->BookFillHist("xy",1000,-300,300,1000,-200,200,det_x[nHit],det_y[nHit]);      
-   }
-   return true;
+        if(ProcessIDMapping.find(det_VrtxProcID[nHit])!=ProcessIDMapping.end()) {
+            histSvc->SetParticleTag(ProcessIDMapping[det_VrtxProcID[nHit]]);
+        }
+        else {
+            histSvc->SetParticleTag("UnknownProd");
+        }
+        // histSvc->SetParticleTag("");
+        histSvc->BookFillHist("energy",1000,0,500,det_kine[nHit]);
+        histSvc->BookFillHist("edep",1000,0,500,det_edep[nHit]);
+        histSvc->BookFillHist("xy",1000,-300,300,1000,-200,200,det_x[nHit],det_y[nHit]);
+    }
+    return true;
 }
 
 
@@ -272,83 +270,80 @@ void t1::FillHists(int nHit,float process_weight)
 
 bool t1::RealGeometryIrradiation()
 {
-   
-   for(int nHit=0;nHit<det_n;nHit++) {
-      histSvc->InitNameSvc();
-      float process_weight = 1.0;
-      // if(det_VrtxProcID[nHit]==19) { // Gamma mumu process xsection nomalize to 1
-      //     process_weight = 1e-3;
-      // }
-      string detectorName = GetDetectorName(det_ID[nHit]);
-      string particleName = GetParticleName(det_VrtxParticleID[nHit]);
-      string parentParticleName = GetParticleName(det_VvvParticleID[nHit]);
-      string processName = GetProcessName(det_VrtxProcID[nHit]);
-      string parentProcessName = GetProcessName(det_VvvProcID[nHit]);
-
-      if(detectorName=="") continue;
-
-      //(detector)_(variable)
-      histSvc->SetDetectorTag(detectorName);      
-      FillHists(nHit,process_weight);
-
-      //(detector)_(particle)_(variable)
-      histSvc->SetProcessTag(particleName);
-      FillHists(nHit,process_weight);
-
-      //(detector)_(process)_(particle)_(variable)
-      histSvc->SetProdTag(processName);      
-      FillHists(nHit,process_weight);
-
-      //(detector)_(process)_(particle)_From_(parent)_(variable)
-      histSvc->SetProcessTag(particleName+"_From_"+parentParticleName);
-      FillHists(nHit,process_weight);
-
-      //(detector)_From_(parent process)_(particle)_From_(parent)_(variable)      
-      histSvc->SetProdTag("From_"+parentProcessName);      
-      FillHists(nHit,process_weight);
-
-      //(detector)_(process)_From_(parent process)_(particle)_From_(parent)_(variable)      
-      histSvc->SetProdTag(processName+"_From_"+parentProcessName);
-      FillHists(nHit,process_weight);
-
-      //(detector)_(process)_From_(parent process)_(particle)_(variable)
-      histSvc->SetProcessTag(particleName);
-      FillHists(nHit,process_weight);
-
-
-      //(detector)_From_(parent process)_(particle)_(variable)
-      histSvc->SetProdTag("From_"+parentProcessName);
-      FillHists(nHit,process_weight);
-
-      //(detector)_From_(parent process)_(variable)
-      histSvc->SetProcessTag("");
-      FillHists(nHit,process_weight);
-
-      //(detector)_(process)_(variable)
-      histSvc->SetProdTag(processName);
-      FillHists(nHit,process_weight);
-   }
-   return true;
+    for(int nHit=0;nHit<det_n;nHit++) {
+       histSvc->InitNameSvc();
+       float process_weight = 1.0;
+       // if(det_VrtxProcID[nHit]==19) { // Gamma mumu process xsection nomalize to 1
+       //     process_weight = 1e-3;
+       // }
+       string detectorName = GetDetectorName(det_ID[nHit]);
+       string particleName = GetParticleName(det_VrtxParticleID[nHit]);
+       string parentParticleName = GetParticleName(det_VvvParticleID[nHit]);
+       string processName = GetProcessName(det_VrtxProcID[nHit]);
+       string parentProcessName = GetProcessName(det_VvvProcID[nHit]);
+ 
+       if(detectorName=="") continue;
+ 
+       //(detector)_(variable)
+       histSvc->SetDetectorTag(detectorName);      
+       FillHists(nHit,process_weight);
+ 
+       //(detector)_(particle)_(variable)
+       histSvc->SetParticleTag(particleName);
+       FillHists(nHit,process_weight);
+ 
+       //(detector)_(process)_(particle)_(variable)
+       histSvc->SetProcessTag(processName);      
+       FillHists(nHit,process_weight);
+ 
+       //(detector)_(process)_(particle)_From_(parent)_(variable)
+       histSvc->SetParticleTag(particleName+"_From_"+parentParticleName);
+       FillHists(nHit,process_weight);
+ 
+       //(detector)_From_(parent process)_(particle)_From_(parent)_(variable)      
+       histSvc->SetProcessTag("From_"+parentProcessName);      
+       FillHists(nHit,process_weight);
+ 
+       //(detector)_(process)_From_(parent process)_(particle)_From_(parent)_(variable)      
+       histSvc->SetProcessTag(processName+"_From_"+parentProcessName);
+       FillHists(nHit,process_weight);
+ 
+       //(detector)_(process)_From_(parent process)_(particle)_(variable)
+       histSvc->SetParticleTag(particleName);
+       FillHists(nHit,process_weight);
+ 
+ 
+       //(detector)_From_(parent process)_(particle)_(variable)
+       histSvc->SetProcessTag("From_"+parentProcessName);
+       FillHists(nHit,process_weight);
+ 
+       //(detector)_From_(parent process)_(variable)
+       histSvc->SetParticleTag("");
+       FillHists(nHit,process_weight);
+ 
+       //(detector)_(process)_(variable)
+       histSvc->SetProcessTag(processName);
+       FillHists(nHit,process_weight);
+    }
+    return true;
 }
 
 void t1::Loop()
 {
-   if (fChain == 0) return;
+    if (fChain == 0) return;
 
-   Long64_t nentries = fChain->GetEntriesFast();
-
-   Long64_t nbytes = 0, nb = 0;
-   // for (Long64_t jentry=0; jentry<100000;jentry++) {
-   for (Long64_t jentry=0; jentry<nentries;jentry++) {
-      Long64_t ientry = LoadTree(jentry);
-      if (ientry < 0) break;
-
-      if(jentry%100000==0) {
-         cout << "processed " << jentry << " events" << endl;
-      }
-
-      nb = fChain->GetEntry(jentry);   nbytes += nb;      
-      (this->*func_anlysis_method)();
-   }
-   histSvc->Write();
+    Long64_t nentries = fChain->GetEntriesFast();
+    Long64_t nbytes = 0, nb = 0;
+    for (Long64_t jentry=0; jentry<nentries;jentry++) {
+       Long64_t ientry = LoadTree(jentry);
+       if (ientry < 0) break;
+ 
+       if(jentry%100000==0) {
+          cout << "processed " << jentry << " events" << endl;
+       }
+ 
+       nb = fChain->GetEntry(jentry);   nbytes += nb;      
+       (this->*func_anlysis_method)();
+    }
+    histSvc->Write();
 }
