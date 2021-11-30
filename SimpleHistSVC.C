@@ -41,7 +41,7 @@ void SimpleHistSVC::SetProdTag(std::string name) {
     prodName = name;
 }
 
-void SimpleHistSVC::BookFillHist(std::string name, int nbins, float start, float end, float value) {
+void SimpleHistSVC::BookFillHist(std::string name, int nbins, float start, float end, float value, float weight) {
     std::string fullname = getFullName(name);
     std::map<std::string,TH1F*>::iterator itr = histsDB_1d.find(fullname);
     
@@ -56,10 +56,11 @@ void SimpleHistSVC::BookFillHist(std::string name, int nbins, float start, float
     } else {
         hist = itr->second;
     }
-    hist->Fill(value);
+    // std::cout << fullname << " " << value << "   " << weight << std::endl;
+    hist->Fill(value,weight);
 }
 
-void SimpleHistSVC::BookFillHist(std::string name, int nbinsX, float startX, float endX, int nbinsY, float startY, float endY,float x, float y) {    
+void SimpleHistSVC::BookFillHist(std::string name, int nbinsX, float startX, float endX, int nbinsY, float startY, float endY,float x, float y, float weight) {
     std::string fullname = getFullName(name);
     
     auto itr = histsDB_2d.find(fullname);
@@ -71,7 +72,7 @@ void SimpleHistSVC::BookFillHist(std::string name, int nbinsX, float startX, flo
     } else {
         hist = itr->second;
     }
-    hist->Fill(x,y);
+    hist->Fill(x,y,weight);
 }
 
 void SimpleHistSVC::BookFile(TFile *file) {

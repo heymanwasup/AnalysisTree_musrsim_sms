@@ -24,13 +24,23 @@ using namespace std;
 
 class t1 {
 public:
-   bool GmmStudy(); //CC
-   bool IrradiationStudy(); //CC
-   bool RealGeometryIrradiation(); //CC
-   bool RealGeometryGmm(); //CC
-   void BookMethod(string method_name); //CC
-   bool (t1::*func_anlysis_method)(); //CC
    
+   //Analysis functions
+   bool GmmStudy();
+   bool IrradiationStudy();
+   bool RealGeometryIrradiation();
+   bool RealGeometryGmm();
+   bool RealGeometry_1p2GeV();   
+
+   string GetParticleName(int PID);
+   string GetProcessName(int ProcID);
+   string GetDetectorName(int DetectorID);
+   void FillHists(int nHit,float process_weight);
+   void FillTimeInfo(string name,float hitTime,float weight);
+
+   bool (t1::*func_anlysis_method)();
+   
+
 
 protected: 
    map<int,string> PID_to_Name; //CC
@@ -207,6 +217,24 @@ t1::t1(TTree *tree,TFile *output_file) : fChain(0), f_out(output_file)
    ProcessIDMapping[14] = "conv";
    ProcessIDMapping[15] = "compt";
    ProcessIDMapping[16] = "phot";
+   
+   ProcessIDMapping[17] = "dInelastic";
+   ProcessIDMapping[18] = "electronNuclear";
+   ProcessIDMapping[19] = "GammaToMuPair";
+   ProcessIDMapping[20] = "hBertiniCaptureAtRest";
+   ProcessIDMapping[21] = "hIoni";
+   ProcessIDMapping[22] = "lambdaInelastic";
+   ProcessIDMapping[23] = "muMinusCaptureAtRest";
+   ProcessIDMapping[24] = "muonNuclear";
+   ProcessIDMapping[25] = "nCapture";
+   ProcessIDMapping[26] = "neutronInelastic";
+   ProcessIDMapping[27] = "photonNuclear";
+   ProcessIDMapping[28] = "pi-Inelastic";
+   ProcessIDMapping[29] = "pi+Inelastic";
+   ProcessIDMapping[30] = "protonInelastic";
+   ProcessIDMapping[31] = "tInelastic";
+   ProcessIDMapping[32] = "hadElastic";
+
    ProcessIDMapping[100] = "initialParticle";
 }
 
@@ -308,8 +336,5 @@ Int_t t1::Cut(Long64_t entry)
 // returns  1 if entry is accepted.
 // returns -1 otherwise.
    return 1;
-}
-
-void t1::BookMethod(string method_name) {   
 }
 #endif // #ifdef t1_cxx

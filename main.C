@@ -30,15 +30,17 @@ map<string,string> parse_argv(int argc,char *argv[]) {
             n_arg += 2;
         }
         else {            
+            cout << "unknown args: "<< argv[n_arg] << endl;
             ShowUsage(argv[0]);
             exit(1);
         }
     }
     for(auto itr : name_map) {
-        if(config.find(itr.second)!=config.end()) {
+        if(config.find(itr.second)!=config.end()) {            
             cout << "Using " << itr.second << " : " << config.find(itr.second)->second << endl;
         }
         else {
+            cout << "Args not assigned: " << itr.second << endl;
             ShowUsage(argv[0]);
             exit(1);
         }
@@ -72,6 +74,9 @@ int main(int argc,char *argv[]) {
     }
     else if (method_name == "RealGeometryGmm") {
       myAna.func_anlysis_method = &t1::RealGeometryGmm;
+    }
+    else if (method_name == "RealGeometry_1p2GeV") {
+      myAna.func_anlysis_method = &t1::RealGeometry_1p2GeV; 
     }
     else {
       cout << "unknown method: " << method_name << endl;

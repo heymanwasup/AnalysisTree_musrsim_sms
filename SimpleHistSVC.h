@@ -18,8 +18,8 @@ class SimpleHistSVC {
     public:
         SimpleHistSVC();
         ~SimpleHistSVC();
-        void BookFillHist(std::string name, int nbins, float start, float end, float value);
-        void BookFillHist(std::string name, int nbinsX, float startX, float endX, int nbinsY, float startY, float endY,float x, float y);
+        void BookFillHist(std::string name, int nbins, float start, float end, float value, float weight=1.);
+        void BookFillHist(std::string name, int nbinsX, float startX, float endX, int nbinsY, float startY, float endY,float x, float y, float weight=1.);
         void SetProcessTag(std::string name);
         void SetDetectorTag(std::string name);
         void SetProdTag(std::string name);
