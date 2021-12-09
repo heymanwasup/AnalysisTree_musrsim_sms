@@ -29,7 +29,7 @@ bool t1::GmmStudy() {
         histSvc->BookFillHist("energy",1000,0,10000,det_kine[nHit]);
         histSvc->BookFillHist("angle_x",1000,-90,90,angle_x);
         histSvc->BookFillHist("theta", 1000, 0, 180, theta);
-        histSvc->BookFillHist("energy_angle",100,0,10000, det_kine[nHit], 250, -90, 90, angle_x);
+        histSvc->BookFillHist("energy_angle",100,0,10000, 250, -90, 90, det_kine[nHit], angle_x);
     }
     return true;
 }
