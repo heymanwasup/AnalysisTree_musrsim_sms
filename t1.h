@@ -26,8 +26,7 @@ class t1 {
 public:
    
     //Analysis functions
-    bool GmmStudy();
-    bool IrradiationStudy();
+    bool GmmStudy();    
     bool RealGeometryIrradiation();
     bool RealGeometryGmm();
     bool RealGeometry_1p2GeV();   

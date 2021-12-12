@@ -5,15 +5,15 @@ Log        = submit_condor.log
 
 Output     = logs/condor.Laser_irradiation.$(Process).out
 Error      = logs/condor.Laser_irradiation.$(Process).error
-Arguments = Laser_irradiation $(Process)
+Arguments = Laser_irradiation RealGeometryIrradiation $(Process) 
 Queue 100
 
 # Output     = logs/condor.Laser_1p2GeV.$(Process).out
 # Error      = logs/condor.Laser_1p2GeV.$(Process).error
-# Arguments = Laser_1p2GeV $(Process)
+# Arguments = Laser_1p2GeV RealGeometry_1p2GeV $(Process) 
 # Queue 100
 
 # Output     = logs/condor.Laser_1p2GeV_gmm1e3.$(Process).out
 # Error      = logs/condor.Laser_1p2GeV_gmm1e3.$(Process).error
-# Arguments = Laser_1p2GeV_gmm1e3 $(Process)
+# Arguments = Laser_1p2GeV_gmm1e3 RealGeometryGmm $(Process)
 # Queue 100

@@ -11,10 +11,6 @@
 
 using namespace std;
 
-//  Usage:
-//  ./main.exe /path/to/input.root /path/to/output.root analysis_type
-//  analysis_type = IrradiationStudy or GmmStudy or RealGeometryIrradiation
-
 void ShowUsage(string exe) {
     cout <<"Usage: \n "<< exe << " -i /path/to/input.root -o /path/to/output.root -m analysis_method"<<endl;
 }
@@ -66,9 +62,6 @@ int main(int argc,char *argv[]) {
     if(method_name == "GmmStudy") {
         myAna.func_anlysis_method = &t1::GmmStudy;
     }
-    else if(method_name == "IrradiationStudy") {
-        myAna.func_anlysis_method = &t1::IrradiationStudy;
-    }
     else if(method_name == "RealGeometryIrradiation") {
         myAna.func_anlysis_method = &t1::RealGeometryIrradiation;
     }
@@ -76,7 +69,7 @@ int main(int argc,char *argv[]) {
         myAna.func_anlysis_method = &t1::RealGeometryGmm;
     }
     else if (method_name == "RealGeometry_1p2GeV") {
-      myAna.func_anlysis_method = &t1::RealGeometry_1p2GeV; 
+        myAna.func_anlysis_method = &t1::RealGeometry_1p2GeV; 
     }
     else {
         cout << "unknown method: " << method_name << endl;

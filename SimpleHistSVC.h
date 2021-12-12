@@ -20,6 +20,9 @@ public:
     ~SimpleHistSVC();
     void BookFillHist(std::string name, int nbins, float start, float end, float value, float weight=1.);
     void BookFillHist(std::string name, int nbinsX, float startX, float endX, int nbinsY, float startY, float endY,float x, float y, float weight=1.);
+    void BookFillCutHist(std::string name, int nbins, std::string cuts[], std::string label, float weight=1.);
+    void BookFillCutHist(std::string name, int nbinsX, std::string cutsX[], int nbinsY, std::string cutsY[], std::string labelX, std::string labelY, float weight=1.);
+
     void SetParticleTag(std::string name);
     void SetDetectorTag(std::string name);
     void SetProcessTag(std::string name);
