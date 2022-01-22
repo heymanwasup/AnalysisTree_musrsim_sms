@@ -314,8 +314,8 @@ bool t1::GmmStudy_PaperGeo() {
             }
             break;
       }
-      if (if_gen_muon) histSvc->BookFillHist("mu_p&m_energy", 1000, 0, 10000, 10000, 0, 10000, mu_p_E, mu_m_E, 1.0, false);
    }
+   if (if_gen_muon) histSvc->BookFillHist("mu_p&m_energy", 1000, 0, 10000, 10000, 0, 10000, mu_p_E, mu_m_E, 1.0, false);
    return true;
 } 
 
