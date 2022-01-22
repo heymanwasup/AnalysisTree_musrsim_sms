@@ -273,6 +273,38 @@ bool t1::GmmStudy() {
    return true;
 }
 
+bool t1::GmmStudy_PaperGeo() {
+   
+   for (int nHit=0; nHit<det_n; nHit++){
+      switch (det_ID[nHit]) {
+         case 22: // BackDet1
+            if(PID_to_Name.find(det_VrtxParticleID[nHit])!=PID_to_Name.end()) {
+               histSvc->SetParticleTag(PID_to_Name[det_VrtxParticleID[nHit]]);
+            }
+            else {
+               histSvc->SetParticleTag("UnknownPID");
+            }
+
+            histSvc->BookFillHist("count", 1, 0, 1, 0);
+            break;
+         case 23: // BackDet2
+            if(PID_to_Name.find(det_VrtxParticleID[nHit])!=PID_to_Name.end()) {
+               histSvc->SetParticleTag(PID_to_Name[det_VrtxParticleID[nHit]]);
+            }
+            else {
+               histSvc->SetParticleTag("UnknownPID");
+            }
+
+            float angle_degree = TMath::ATan(det_y[nHit]/1000.)*180/3.141592653;
+
+            histSvc->BookFillHist("energy", 1000, 0, 10000, det_kine[nHit]);
+            histSvc->BookFillHist("angle", 1000, -90, 90, angle_degree);
+            histSvc->BookFillHist("energy_angle",100,0,10000, 250, -90, 90, det_kine[nHit], angle_degree);
+            break;
+      }
+   }
+} 
+
 
 string t1::GetParticleName(int PID)
 {

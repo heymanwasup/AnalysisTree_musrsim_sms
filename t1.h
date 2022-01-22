@@ -27,6 +27,7 @@ public:
 
    //Analysis functions
    bool GmmStudy();
+   bool GmmStudy_PaperGeo();
    bool RealGeometryIrradiation();
    bool RealGeometryGmm();
    bool RealGeometry_1p2GeV();
