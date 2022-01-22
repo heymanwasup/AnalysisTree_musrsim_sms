@@ -277,7 +277,8 @@ bool t1::GmmStudy_PaperGeo() {
 
    Double_t mu_p_E = 0.;
    Double_t mu_m_E = 0.;
-   bool if_gen_muon = false;
+   bool if_gen_muonp = false;
+   bool if_gen_muonm = false;
    for (int nHit=0; nHit<det_n; nHit++){
       switch (det_ID[nHit]) {
          case 22: // BackDet1
@@ -305,17 +306,20 @@ bool t1::GmmStudy_PaperGeo() {
             // Plot 2D mu+- Energy Distribution
             if (histSvc->GetParticleTag() == "mu_p"){
                mu_p_E += det_kine[nHit];
-               if_gen_muon = true;
+               if_gen_muonp = true;
             }
 
             if (histSvc->GetParticleTag() == "mu_m"){
                mu_m_E += det_kine[nHit];
-               if_gen_muon = true;
+               if_gen_muonm = true;
             }
             break;
       }
    }
-   if (if_gen_muon) histSvc->BookFillHist("mu_p&m_energy", 1000, 0, 10000, 10000, 0, 10000, mu_p_E, mu_m_E, 1.0, false);
+   if (if_gen_muonp && if_gen_muonm) {
+      histSvc->BookFillHist("mu_p&m_energy", 1000, 0, 10000, 10000, 0, 10000, mu_p_E, mu_m_E, 1.0, false);
+      std::cout << "(" << mu_p_E << ", " << mu_m_E << ")\n";
+   }
    return true;
 } 
 
