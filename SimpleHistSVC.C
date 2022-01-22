@@ -51,6 +51,10 @@ void SimpleHistSVC::SetProcessTag(std::string name) {
    processName = name;
 }
 
+std::string SimpleHistSVC::GetParticleTag() {
+   return particleName;
+}
+
 void SimpleHistSVC::BookFillHist(std::string name, int nbins, float start, float end, float value, float weight) {
    std::string fullname = getFullName(name);
    std::map<std::string,TH1F*>::iterator itr = histsDB_1d.find(fullname);
@@ -69,8 +73,8 @@ void SimpleHistSVC::BookFillHist(std::string name, int nbins, float start, float
    hist->Fill(value,weight);
 }
 
-void SimpleHistSVC::BookFillHist(std::string name, int nbinsX, float startX, float endX, int nbinsY, float startY, float endY,float x, float y, float weight) {
-   std::string fullname = getFullName(name);
+void SimpleHistSVC::BookFillHist(std::string name, int nbinsX, float startX, float endX, int nbinsY, float startY, float endY,float x, float y, float weight, bool if_use_full_name) {
+   std::string fullname = (if_use_full_name) ? getFullName(name) : name;
 
    auto itr = histsDB_2d.find(fullname);
    TH2F * hist;

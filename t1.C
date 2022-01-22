@@ -274,7 +274,10 @@ bool t1::GmmStudy() {
 }
 
 bool t1::GmmStudy_PaperGeo() {
-   
+
+   Double_t mu_p_E = 0.;
+   Double_t mu_m_E = 0.;
+   bool if_gen_muon = false;
    for (int nHit=0; nHit<det_n; nHit++){
       switch (det_ID[nHit]) {
          case 22: // BackDet1
@@ -298,8 +301,20 @@ bool t1::GmmStudy_PaperGeo() {
             histSvc->BookFillHist("energy", 1000, 0, 10000, det_kine[nHit]);
             histSvc->BookFillHist("angle", 1000, -90, 90, angle_degree);
             histSvc->BookFillHist("energy_angle", 100, 0, 10000, 250, -90, 90, det_kine[nHit], angle_degree);
+
+            // Plot 2D mu+- Energy Distribution
+            if (histSvc->GetParticleTag() == "mu_p"){
+               mu_p_E += det_kine[nHit];
+               if_gen_muon = true;
+            }
+
+            if (histSvc->GetParticleTag() == "mu_m"){
+               mu_m_E += det_kine[nHit];
+               if_gen_muon = true;
+            }
             break;
       }
+      if (if_gen_muon) histSvc->BookFillHist("mu_p&m_energy", 1000, 0, 10000, 10000, 0, 10000, mu_p_E, mu_m_E, 1.0, false);
    }
    return true;
 } 
