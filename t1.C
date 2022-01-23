@@ -275,50 +275,42 @@ bool t1::GmmStudy() {
 
 bool t1::GmmStudy_PaperGeo() {
 
-   Double_t mu_p_E = 0.;
-   Double_t mu_m_E = 0.;
-   bool if_gen_muonp = false;
-   bool if_gen_muonm = false;
    for (int nHit=0; nHit<det_n; nHit++){
       switch (det_ID[nHit]) {
          case 22: // BackDet1
-            if (PID_to_Name.find(det_VrtxParticleID[nHit]) != PID_to_Name.end()) {
+            if (det_edep_mup[nHit] > 0){  // mu+
+               histSvc->SetParticleTag("mu_p");
+               histSvc->BookFillHist("mu_p_count", 1, 0, 1, 0, 1.0, false);
+               if (det_edep_mun[nHit] > 0) {  // mu-
+                  histSvc->SetParticleTag("mu_m");
+                  histSvc->BookFillHist("mu_n_count", 1, 0, 1, 0, 1.0, false);
+               }
+            }
+            else if (PID_to_Name.find(det_VrtxParticleID[nHit]) != PID_to_Name.end()) {
                histSvc->SetParticleTag(PID_to_Name[det_VrtxParticleID[nHit]]);
             } else {
                histSvc->SetParticleTag("UnknownPID");
             }
-
-            histSvc->BookFillHist("count", 1, 0, 1, 0);
             break;
          case 23: // BackDet2
-            if (PID_to_Name.find(det_VrtxParticleID[nHit]) != PID_to_Name.end()) {
-               histSvc->SetParticleTag(PID_to_Name[det_VrtxParticleID[nHit]]);
-            } else {
-               histSvc->SetParticleTag("UnknownPID");
+            if (det_edep_mup[nHit] > 0){
+               histSvc->SetParticleTag("mu_p");
+
+               float angle_degree = TMath::ATan(det_y[nHit] / 1000.) * 180 / 3.141592653;
+               histSvc->BookFillHist("energy", 1000, 0, 10000, det_kine[nHit]);
+               histSvc->BookFillHist("angle", 1000, -90, 90, angle_degree);
+               histSvc->BookFillHist("energy_angle", 100, 0, 10000, 250, -90, 90, det_kine[nHit], angle_degree);
             }
+            if (det_edep_mun[nHit] > 0){
+               histSvc->SetParticleTag("mu_n");
 
-            float angle_degree = TMath::ATan(det_y[nHit] / 1000.) * 180 / 3.141592653;
-
-            histSvc->BookFillHist("energy", 1000, 0, 10000, det_kine[nHit]);
-            histSvc->BookFillHist("angle", 1000, -90, 90, angle_degree);
-            histSvc->BookFillHist("energy_angle", 100, 0, 10000, 250, -90, 90, det_kine[nHit], angle_degree);
-
-            // Plot 2D mu+- Energy Distribution
-            if (histSvc->GetParticleTag() == "mu_p"){
-               mu_p_E += det_kine[nHit];
-               if_gen_muonp = true;
-            }
-
-            if (histSvc->GetParticleTag() == "mu_m"){
-               mu_m_E += det_kine[nHit];
-               if_gen_muonm = true;
+               float angle_degree = TMath::ATan(det_y[nHit] / 1000.) * 180 / 3.141592653;
+               histSvc->BookFillHist("energy", 1000, 0, 10000, det_kine[nHit]);
+               histSvc->BookFillHist("angle", 1000, -90, 90, angle_degree);
+               histSvc->BookFillHist("energy_angle", 100, 0, 10000, 250, -90, 90, det_kine[nHit], angle_degree);
             }
             break;
       }
-   }
-   if (if_gen_muonp && if_gen_muonm) {
-      histSvc->BookFillHist("mu_p&m_energy", 1000, 0, 10000, 10000, 0, 10000, mu_p_E, mu_m_E, 1.0, false);
-      std::cout << "(" << mu_p_E << ", " << mu_m_E << ")\n";
    }
    return true;
 } 

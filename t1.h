@@ -66,6 +66,7 @@ public :
    Double_t        det_edep_pos[det_n_max];   //[det_n]
    Double_t        det_edep_gam[det_n_max];   //[det_n]
    Double_t        det_edep_mup[det_n_max];   //[det_n]
+   Double_t        det_edep_mun[det_n_max];   //[det_n]
    Int_t           det_nsteps[det_n_max];   //[det_n]
    Double_t        det_length[det_n_max];   //[det_n]
    Double_t        det_time_start[det_n_max];   //[det_n]
@@ -98,6 +99,7 @@ public :
    TBranch        *b_det_edep_pos;   //!
    TBranch        *b_det_edep_gam;   //!
    TBranch        *b_det_edep_mup;   //!
+   TBranch        *b_det_edep_mun;   //!
    TBranch        *b_det_nsteps;   //!
    TBranch        *b_det_length;   //!
    TBranch        *b_det_time_start;   //!
@@ -288,6 +290,7 @@ void t1::Init(TTree *tree)
    fChain->SetBranchAddress("det_edep_pos", det_edep_pos, &b_det_edep_pos);
    fChain->SetBranchAddress("det_edep_gam", det_edep_gam, &b_det_edep_gam);
    fChain->SetBranchAddress("det_edep_mup", det_edep_mup, &b_det_edep_mup);
+   fChain->SetBranchAddress("det_edep_mun", det_edep_mun, &b_det_edep_mun);
    fChain->SetBranchAddress("det_nsteps", det_nsteps, &b_det_nsteps);
    fChain->SetBranchAddress("det_length", det_length, &b_det_length);
    fChain->SetBranchAddress("det_time_start", det_time_start, &b_det_time_start);

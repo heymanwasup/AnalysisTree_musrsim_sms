@@ -55,8 +55,8 @@ std::string SimpleHistSVC::GetParticleTag() {
    return particleName;
 }
 
-void SimpleHistSVC::BookFillHist(std::string name, int nbins, float start, float end, float value, float weight) {
-   std::string fullname = getFullName(name);
+void SimpleHistSVC::BookFillHist(std::string name, int nbins, float start, float end, float value, float weight, bool if_use_full_name) {
+   std::string fullname = (if_use_full_name) ? getFullName(name) : name;
    std::map<std::string,TH1F*>::iterator itr = histsDB_1d.find(fullname);
 
    TH1F * hist;
