@@ -74,7 +74,15 @@ public :
    Double_t        det_x[det_n_max];   //[det_n]
    Double_t        det_y[det_n_max];   //[det_n]
    Double_t        det_z[det_n_max];   //[det_n]
+   Double_t        det_x_mup[det_n_max];   //[det_n]
+   Double_t        det_y_mup[det_n_max];   //[det_n]
+   Double_t        det_z_mup[det_n_max];   //[det_n]
+   Double_t        det_x_mun[det_n_max];   //[det_n]
+   Double_t        det_y_mun[det_n_max];   //[det_n]
+   Double_t        det_z_mun[det_n_max];   //[det_n]
    Double_t        det_kine[det_n_max];   //[det_n]
+   Double_t        det_kine_mup[det_n_max];   //[det_n]
+   Double_t        det_kine_mun[det_n_max];   //[det_n]
    Int_t           det_VrtxTrackID[det_n_max];   //[det_n]
    Int_t           det_VrtxParticleID[det_n_max];   //[det_n]
 
@@ -107,7 +115,15 @@ public :
    TBranch        *b_det_x;   //!
    TBranch        *b_det_y;   //!
    TBranch        *b_det_z;   //!
+   TBranch        *b_det_x_mup;   //!
+   TBranch        *b_det_y_mup;   //!
+   TBranch        *b_det_z_mup;   //!
+   TBranch        *b_det_x_mun;   //!
+   TBranch        *b_det_y_mun;   //!
+   TBranch        *b_det_z_mun;   //!
    TBranch        *b_det_kine;   //!
+   TBranch        *b_det_kine_mup;   //!
+   TBranch        *b_det_kine_mun;   //!
 
 
 
@@ -298,11 +314,18 @@ void t1::Init(TTree *tree)
    fChain->SetBranchAddress("det_x", det_x, &b_det_x);
    fChain->SetBranchAddress("det_y", det_y, &b_det_y);
    fChain->SetBranchAddress("det_z", det_z, &b_det_z);
-   fChain->SetBranchAddress("det_kine", det_kine, &b_det_kine);
+   fChain->SetBranchAddress("det_x_mup", det_x_mup, &b_det_x_mup);
+   fChain->SetBranchAddress("det_y_mup", det_y_mup, &b_det_y_mup);
+   fChain->SetBranchAddress("det_z_mup", det_z_mup, &b_det_z_mup);
+   fChain->SetBranchAddress("det_x_mun", det_x_mun, &b_det_x_mun);
+   fChain->SetBranchAddress("det_y_mun", det_y_mun, &b_det_y_mun);
+   fChain->SetBranchAddress("det_z_mun", det_z_mun, &b_det_z_mun);
    fChain->SetBranchAddress("det_VrtxTrackID", det_VrtxTrackID, &b_det_VrtxTrackID);
    fChain->SetBranchAddress("det_VrtxParticleID", det_VrtxParticleID, &b_det_VrtxParticleID);
 
    fChain->SetBranchAddress("det_kine", det_kine, &b_det_kine);
+   fChain->SetBranchAddress("det_kine_mup", det_kine_mup, &b_det_kine_mup);
+   fChain->SetBranchAddress("det_kine_mun", det_kine_mun, &b_det_kine_mun);
    fChain->SetBranchAddress("det_VrtxProcID", det_VrtxProcID, &b_det_VrtxProcID);
    fChain->SetBranchAddress("det_VvvKine", det_VvvKine, &b_det_VvvKine);
    fChain->SetBranchAddress("det_VvvProcID", det_VvvProcID, &b_det_VvvProcID);

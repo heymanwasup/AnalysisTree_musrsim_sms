@@ -278,18 +278,12 @@ bool t1::GmmStudy_PaperGeo() {
    for (int nHit=0; nHit<det_n; nHit++){
       switch (det_ID[nHit]) {
          case 22: // BackDet1
+            if (det_edep_mup[nHit] > 0 && det_edep_mun[nHit] > 0) histSvc->BookFillHist("gmm_pair_count",  1, 0, 1, 0, 1.0, false);
             if (det_edep_mup[nHit] > 0){  // mu+
-               histSvc->SetParticleTag("mu_p");
                histSvc->BookFillHist("mu_p_count", 1, 0, 1, 0, 1.0, false);
-               if (det_edep_mun[nHit] > 0) {  // mu-
-                  histSvc->SetParticleTag("mu_m");
-                  histSvc->BookFillHist("mu_n_count", 1, 0, 1, 0, 1.0, false);
-               }
             }
-            else if (PID_to_Name.find(det_VrtxParticleID[nHit]) != PID_to_Name.end()) {
-               histSvc->SetParticleTag(PID_to_Name[det_VrtxParticleID[nHit]]);
-            } else {
-               histSvc->SetParticleTag("UnknownPID");
+            if (det_edep_mun[nHit] > 0) {  // mu-
+               histSvc->BookFillHist("mu_n_count", 1, 0, 1, 0, 1.0, false);
             }
             break;
          case 23: // BackDet2
@@ -297,23 +291,25 @@ bool t1::GmmStudy_PaperGeo() {
                histSvc->SetParticleTag("mu_p");
 
                float angle_degree = TMath::ATan(det_y[nHit] / 1000.) * 180 / 3.141592653;
-               histSvc->BookFillHist("energy", 1000, 0, 10000, det_kine[nHit]);
+               histSvc->BookFillHist("energy", 1000, 0, 10000, det_kine_mup[nHit]);
                histSvc->BookFillHist("angle", 1000, -90, 90, angle_degree);
-               histSvc->BookFillHist("energy_angle", 100, 0, 10000, 250, -90, 90, det_kine[nHit], angle_degree);
+               histSvc->BookFillHist("energy_angle", 100, 0, 10000, 250, -90, 90, det_kine_mup[nHit], angle_degree);
             }
             if (det_edep_mun[nHit] > 0){
                histSvc->SetParticleTag("mu_n");
 
                float angle_degree = TMath::ATan(det_y[nHit] / 1000.) * 180 / 3.141592653;
-               histSvc->BookFillHist("energy", 1000, 0, 10000, det_kine[nHit]);
+               histSvc->BookFillHist("energy", 1000, 0, 10000, det_kine_mun[nHit]);
                histSvc->BookFillHist("angle", 1000, -90, 90, angle_degree);
-               histSvc->BookFillHist("energy_angle", 100, 0, 10000, 250, -90, 90, det_kine[nHit], angle_degree);
+               histSvc->BookFillHist("energy_angle", 100, 0, 10000, 250, -90, 90, det_kine_mun[nHit], angle_degree);
             }
+            if (det_edep_mup[nHit] > 0 && det_edep_mun[nHit] > 0)
+               histSvc->BookFillHist("mu_p&n_energy", 1000, 0, 10000, 1000, 0, 10000, det_kine_mup[nHit], det_kine_mun[nHit], 1.0, false);
             break;
       }
    }
    return true;
-} 
+}
 
 
 string t1::GetParticleName(int PID)
