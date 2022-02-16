@@ -361,8 +361,8 @@ void t1::Init(TTree *tree)
    fChain->SetBranchAddress("det_VvvParticleID", det_VvvParticleID, &b_det_VvvParticleID);
 
    fChain->SetBranchAddress("save_n", &save_n, &b_save_n);
-   fChain->SetBranchAddress("save_det_ID", save_det_ID, &b_save_det_ID);
-   fChain->SetBranchAddress("save_particle_ID", save_particle_ID, &b_save_particle_ID);
+   fChain->SetBranchAddress("save_detID", save_det_ID, &b_save_det_ID);
+   fChain->SetBranchAddress("save_particleID", save_particle_ID, &b_save_particle_ID);
    fChain->SetBranchAddress("save_ke", save_ke, &b_save_ke);
    fChain->SetBranchAddress("save_time", save_time, &b_save_time);
    fChain->SetBranchAddress("save_x", save_x, &b_save_x);
