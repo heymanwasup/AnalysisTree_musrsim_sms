@@ -319,7 +319,8 @@ bool t1::MoreParticles(){
                histSvc->SetParticleTag(PID_to_Name[save_particle_ID[i]]);
             }
             else {
-               histSvc->SetParticleTag("UnknownPID");
+               std::string tag = std::string("PID_") + std::to_string(save_particle_ID[i]);
+               histSvc->SetParticleTag(tag.c_str());
                if (unknown_particle_map.find(save_particle_ID[i]) == unknown_particle_map.end())
                   unknown_particle_map[save_particle_ID[i]] = 1;
                else
