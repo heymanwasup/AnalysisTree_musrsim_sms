@@ -312,6 +312,7 @@ bool t1::GmmStudy_PaperGeo() {
 }
 
 bool t1::MoreParticles(){
+   std::map<Int_t, Int_t> unknown_particle_map;
    for (int i=0; i<save_n; i++){
       switch (save_det_ID[i]) {
          case 22: // Backdet1
@@ -320,7 +321,10 @@ bool t1::MoreParticles(){
             }
             else {
                histSvc->SetParticleTag("UnknownPID");
-               std::cout << "Warning: Unknown Particle ID:" << save_particle_ID[i] << "occurred.\n";
+               if (unknown_particle_map.find(save_particle_ID[i]) == unknown_particle_map.end())
+                  unknown_particle_map[save_particle_ID[i]] = 1;
+               else
+                  unknown_particle_map[save_particle_ID[i]]++;
             }
 
             histSvc->BookFillHist("count", 1, 0, 1, 0);
@@ -331,7 +335,6 @@ bool t1::MoreParticles(){
             }
             else {
                histSvc->SetParticleTag("UnknownPID");
-               std::cout << "Warning: Unknown Particle ID:" << save_particle_ID[i] << "occurred.\n";
             }
 
             float angle_degree = TMath::ATan(save_y[i] / 1000.) * 180 / TMath::Pi();
@@ -339,6 +342,9 @@ bool t1::MoreParticles(){
             histSvc->BookFillHist("angle", 1000, -90, 90, angle_degree);
             break;
       }
+   }
+   for (auto itr = unknown_particle_map.begin(); itr != unknown_particle_map.end(); itr++){
+      std::cout << "Unknown Particle ID:" << itr->first << " Occur times:" << itr->second << std::endl;
    }
 }
 
