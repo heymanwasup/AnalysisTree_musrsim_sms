@@ -47,6 +47,7 @@ protected:
    map<int,string> ProcessIDMapping; //CC
 
 public :
+   std::map<Int_t, Int_t> unknown_particle_map;
    SimpleHistSVC  *histSvc; //!
    TFile          *f_out; //!
 
