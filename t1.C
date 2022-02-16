@@ -333,7 +333,8 @@ bool t1::MoreParticles(){
                histSvc->SetParticleTag(PID_to_Name[save_particle_ID[i]]);
             }
             else {
-               histSvc->SetParticleTag("UnknownPID");
+               std::string tag = std::string("PID_") + std::to_string(save_particle_ID[i]);
+               histSvc->SetParticleTag(tag.c_str());
             }
 
             float angle_degree = TMath::ATan(save_y[i] / 1000.) * 180 / TMath::Pi();
