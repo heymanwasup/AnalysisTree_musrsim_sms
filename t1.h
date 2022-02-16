@@ -17,6 +17,7 @@
 #include <iostream>
 
 #define det_n_max 100
+#define save_n_max 1000
 
 
 using namespace std;
@@ -28,6 +29,7 @@ public:
    //Analysis functions
    bool GmmStudy();
    bool GmmStudy_PaperGeo();
+   bool MoreParticles();
    bool RealGeometryIrradiation();
    bool RealGeometryGmm();
    bool RealGeometry_1p2GeV();
@@ -93,6 +95,20 @@ public :
    Int_t           det_VvvTrackID[det_n_max];   //[det_n]
    Int_t           det_VvvParticleID[det_n_max];   //[det_n]
 
+   // Array with "save"
+   Int_t           save_n;
+   Int_t           save_det_ID[save_n_max];
+   Int_t           save_particle_ID[save_n_max];
+   Double_t        save_ke[save_n_max];
+   Double_t        save_time[save_n_max];
+   Double_t        save_x[save_n_max];
+   Double_t        save_y[save_n_max];
+   Double_t        save_z[save_n_max];
+   Double_t        save_px[save_n_max];
+   Double_t        save_py[save_n_max];
+   Double_t        save_pz[save_n_max];
+
+
    // List of branches
    TBranch        *b_runID;   //!
    TBranch        *b_eventID;   //!
@@ -136,6 +152,18 @@ public :
    TBranch        *b_det_VvvTrackID;   //!
    TBranch        *b_det_VvvParticleID;   //!
 
+   // Branches with "save"
+   TBranch        *b_save_n;
+   TBranch        *b_save_det_ID;
+   TBranch        *b_save_particle_ID;
+   TBranch        *b_save_ke;
+   TBranch        *b_save_time;
+   TBranch        *b_save_x;
+   TBranch        *b_save_y;
+   TBranch        *b_save_z;
+   TBranch        *b_save_px;
+   TBranch        *b_save_py;
+   TBranch        *b_save_pz;
 
 
    t1(TTree *tree,TFile *output_file);
@@ -331,6 +359,19 @@ void t1::Init(TTree *tree)
    fChain->SetBranchAddress("det_VvvProcID", det_VvvProcID, &b_det_VvvProcID);
    fChain->SetBranchAddress("det_VvvTrackID", det_VvvTrackID, &b_det_VvvTrackID);
    fChain->SetBranchAddress("det_VvvParticleID", det_VvvParticleID, &b_det_VvvParticleID);
+
+   fChain->SetBranchAddress("save_n", &save_n, &b_save_n);
+   fChain->SetBranchAddress("save_det_ID", save_det_ID, &b_save_det_ID);
+   fChain->SetBranchAddress("save_particle_ID", save_particle_ID, &b_save_particle_ID);
+   fChain->SetBranchAddress("save_ke", save_ke, &b_save_ke);
+   fChain->SetBranchAddress("save_time", save_time, &b_save_time);
+   fChain->SetBranchAddress("save_x", save_x, &b_save_x);
+   fChain->SetBranchAddress("save_y", save_y, &b_save_y);
+   fChain->SetBranchAddress("save_z", save_z, &b_save_z);
+   fChain->SetBranchAddress("save_px", save_px, &b_save_px);
+   fChain->SetBranchAddress("save_py", save_py, &b_save_py);
+   fChain->SetBranchAddress("save_pz", save_pz, &b_save_pz);
+
    Notify();
 }
 

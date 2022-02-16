@@ -311,6 +311,37 @@ bool t1::GmmStudy_PaperGeo() {
    return true;
 }
 
+bool t1::MoreParticles(){
+   for (int i=0; i<save_n; i++){
+      switch (save_det_ID[i]) {
+         case 22: // Backdet1
+            if(PID_to_Name.find(save_particle_ID[i])!=PID_to_Name.end()) {
+               histSvc->SetParticleTag(PID_to_Name[save_particle_ID[i]]);
+            }
+            else {
+               histSvc->SetParticleTag("UnknownPID");
+               std::cout << "Warning: Unknown Particle ID:" << save_particle_ID[i] << "occurred.\n";
+            }
+
+            histSvc->BookFillHist("count", 1, 0, 1, 0);
+            break;
+         case 23: // Backdet2
+            if(PID_to_Name.find(save_particle_ID[i])!=PID_to_Name.end()) {
+               histSvc->SetParticleTag(PID_to_Name[save_particle_ID[i]]);
+            }
+            else {
+               histSvc->SetParticleTag("UnknownPID");
+               std::cout << "Warning: Unknown Particle ID:" << save_particle_ID[i] << "occurred.\n";
+            }
+
+            float angle_degree = TMath::ATan(save_y[i] / 1000.) * 180 / TMath::Pi();
+            histSvc->BookFillHist("energy", 1000, 0, 10000, save_ke[i]);
+            histSvc->BookFillHist("angle", 1000, -90, 90, angle_degree);
+            break;
+      }
+   }
+}
+
 
 string t1::GetParticleName(int PID)
 {

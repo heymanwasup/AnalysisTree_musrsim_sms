@@ -65,6 +65,9 @@ int main(int argc,char *argv[]) {
    else if (method_name == "GmmStudy_PaperGeo"){
       myAna.func_anlysis_method = &t1::GmmStudy_PaperGeo;
    }
+   else if (method_name == "MoreParticles"){
+      myAna.func_anlysis_method = &t1::MoreParticles;
+   }
    else if(method_name == "RealGeometryIrradiation") {
       myAna.func_anlysis_method = &t1::RealGeometryIrradiation;
    }
