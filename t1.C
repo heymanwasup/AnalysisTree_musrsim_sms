@@ -314,7 +314,7 @@ bool t1::GmmStudy_PaperGeo() {
 bool t1::MoreParticles(){
    for (int i=0; i<save_n; i++){
       switch (save_det_ID[i]) {
-         case 22: // Backdet1
+         case 22: // Backdet0
             if(PID_to_Name.find(save_particle_ID[i])!=PID_to_Name.end()) {
                histSvc->SetParticleTag(PID_to_Name[save_particle_ID[i]]);
             }
@@ -327,9 +327,87 @@ bool t1::MoreParticles(){
                   unknown_particle_map[save_particle_ID[i]]++;
             }
 
-            histSvc->BookFillHist("count", 1, 0, 1, 0);
+            histSvc->BookFillHist("count0", 1, 0, 1, 0);
             break;
-         case 23: // Backdet2
+         case 23: // Backdet1
+            if(PID_to_Name.find(save_particle_ID[i])!=PID_to_Name.end()) {
+               histSvc->SetParticleTag(PID_to_Name[save_particle_ID[i]]);
+            }
+            else {
+               std::string tag = std::string("PID_") + std::to_string(save_particle_ID[i]);
+               histSvc->SetParticleTag(tag.c_str());
+               if (unknown_particle_map.find(save_particle_ID[i]) == unknown_particle_map.end())
+                  unknown_particle_map[save_particle_ID[i]] = 1;
+               else
+                  unknown_particle_map[save_particle_ID[i]]++;
+            }
+
+            histSvc->BookFillHist("count1", 1, 0, 1, 0);
+            break;
+
+         case 24: // Backdet2
+            if(PID_to_Name.find(save_particle_ID[i])!=PID_to_Name.end()) {
+               histSvc->SetParticleTag(PID_to_Name[save_particle_ID[i]]);
+            }
+            else {
+               std::string tag = std::string("PID_") + std::to_string(save_particle_ID[i]);
+               histSvc->SetParticleTag(tag.c_str());
+               if (unknown_particle_map.find(save_particle_ID[i]) == unknown_particle_map.end())
+                  unknown_particle_map[save_particle_ID[i]] = 1;
+               else
+                  unknown_particle_map[save_particle_ID[i]]++;
+            }
+
+            histSvc->BookFillHist("count2", 1, 0, 1, 0);
+            break;
+
+         case 25: // Backdet3
+            if(PID_to_Name.find(save_particle_ID[i])!=PID_to_Name.end()) {
+               histSvc->SetParticleTag(PID_to_Name[save_particle_ID[i]]);
+            }
+            else {
+               std::string tag = std::string("PID_") + std::to_string(save_particle_ID[i]);
+               histSvc->SetParticleTag(tag.c_str());
+               if (unknown_particle_map.find(save_particle_ID[i]) == unknown_particle_map.end())
+                  unknown_particle_map[save_particle_ID[i]] = 1;
+               else
+                  unknown_particle_map[save_particle_ID[i]]++;
+            }
+
+            histSvc->BookFillHist("count3", 1, 0, 1, 0);
+            break;
+
+         case 26: // Backdet4
+            if(PID_to_Name.find(save_particle_ID[i])!=PID_to_Name.end()) {
+               histSvc->SetParticleTag(PID_to_Name[save_particle_ID[i]]);
+            }
+            else {
+               std::string tag = std::string("PID_") + std::to_string(save_particle_ID[i]);
+               histSvc->SetParticleTag(tag.c_str());
+               if (unknown_particle_map.find(save_particle_ID[i]) == unknown_particle_map.end())
+                  unknown_particle_map[save_particle_ID[i]] = 1;
+               else
+                  unknown_particle_map[save_particle_ID[i]]++;
+            }
+
+            histSvc->BookFillHist("count4", 1, 0, 1, 0);
+            break;
+
+         case 27: // Backdet5
+            if(PID_to_Name.find(save_particle_ID[i])!=PID_to_Name.end()) {
+               histSvc->SetParticleTag(PID_to_Name[save_particle_ID[i]]);
+            }
+            else {
+               std::string tag = std::string("PID_") + std::to_string(save_particle_ID[i]);
+               histSvc->SetParticleTag(tag.c_str());
+               if (unknown_particle_map.find(save_particle_ID[i]) == unknown_particle_map.end())
+                  unknown_particle_map[save_particle_ID[i]] = 1;
+               else
+                  unknown_particle_map[save_particle_ID[i]]++;
+            }
+
+            histSvc->BookFillHist("count5", 1, 0, 1, 0);
+
             if(PID_to_Name.find(save_particle_ID[i])!=PID_to_Name.end()) {
                histSvc->SetParticleTag(PID_to_Name[save_particle_ID[i]]);
             }
@@ -338,9 +416,10 @@ bool t1::MoreParticles(){
                histSvc->SetParticleTag(tag.c_str());
             }
 
-            float angle_degree = TMath::ATan(save_y[i] / 1000.) * 180 / TMath::Pi();
+            float angle_degree = TMath::ATan(save_y[i] / save_z[i]) * 180 / TMath::Pi();
             histSvc->BookFillHist("energy", 1000, 0, 10000, save_ke[i]);
             histSvc->BookFillHist("angle", 1000, -90, 90, angle_degree);
+
             break;
       }
    }
