@@ -344,6 +344,21 @@ bool t1::MoreParticles(){
             }
 
             histSvc->BookFillHist(cnt_num, 1, 0, 1, 0);
+
+            if (save_det_ID[i] == 30) {
+               if(PID_to_Name.find(save_particle_ID[i])!=PID_to_Name.end()) {
+                  histSvc->SetParticleTag(PID_to_Name[save_particle_ID[i]]);
+               }
+               else {
+                  std::string tag = std::string("PID_") + std::to_string(save_particle_ID[i]);
+                  histSvc->SetParticleTag(tag.c_str());
+               }
+
+               float angle_degree = TMath::ATan(save_y[i] / save_z[i]) * 180 / TMath::Pi();
+               histSvc->BookFillHist("energy", 1000, 0, 10000, save_ke[i]);
+               histSvc->BookFillHist("angle", 1000, -90, 90, angle_degree);
+
+            }
             break;
       }
    }
