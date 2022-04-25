@@ -50,6 +50,7 @@ public :
    std::map<Int_t, Int_t> unknown_particle_map;
    SimpleHistSVC  *histSvc; //!
    TFile          *f_out; //!
+   Long64_t        current_enrty;
 
 
    TTree          *fChain;   //!pointer to the analyzed TTree or TChain

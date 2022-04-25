@@ -417,6 +417,14 @@ bool t1::MoreParticles(){
             }
 
             float angle_degree = TMath::ATan(save_y[i] / save_z[i]) * 180 / TMath::Pi();
+            if (histSvc->GetParticleTag() == "mu_p"){
+               std::cout << "musrAna: Find particle mu+ in event: " << current_enrty << ", save number: " << i << std::endl;
+               std::cout << "musrAna: Energy:" << save_ke[i] << ", angle: " << angle_degree << std::endl;
+            }
+            if (histSvc->GetParticleTag() == "mu_m"){
+               std::cout << "musrAna: Find particle mu- in event: " << current_enrty << ", save number: " << i << std::endl;
+               std::cout << "musrAna: Energy:" << save_ke[i] << ", angle: " << angle_degree << std::endl;
+            }
             histSvc->BookFillHist("energy", 1000, 0, 10000, save_ke[i]);
             histSvc->BookFillHist("angle", 1000, -90, 90, angle_degree);
 
@@ -520,6 +528,7 @@ void t1::Loop()
       }
 
       nb = fChain->GetEntry(jentry);   nbytes += nb;
+      current_enrty = jentry;
       (this->*func_anlysis_method)();
    }
    histSvc->Write();
