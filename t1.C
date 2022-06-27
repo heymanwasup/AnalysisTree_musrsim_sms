@@ -316,7 +316,7 @@ bool t1::MoreParticles(){
       if (! save_particle_ID[i] == -13) continue;
 
       histSvc->BookFill3dHist("mup_pos", 500, -500, 500, 500, -500, 500, 600, -600, 600, save_x[i], save_y[i], save_z[i], 1.0, false);
-      histSvc->BookFillHist("mup_energy", 1000, 0, 10000, save_ke[i], 1.0, false);
+      histSvc->BookFillHist("mup_energy", 1000, 0, 500, save_ke[i], 1.0, false);
       histSvc->BookFillHist("mup_count", 1, 0, 1, 0, 1.0 ,false);
    }
    return true;

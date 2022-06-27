@@ -168,6 +168,10 @@ void SimpleHistSVC::Write() {
    for(auto itr : histsDB_2d) {
       (itr.second)->Write();
    }
+
+   for(auto itr : histsDB_3d) {
+      (itr.second)->Write();
+   }
 }
 
 void SimpleHistSVC::Init() {
@@ -175,6 +179,7 @@ void SimpleHistSVC::Init() {
 
    histsDB_1d.clear();
    histsDB_2d.clear();
+   histsDB_3d.clear();
 }
 
 void SimpleHistSVC::InitNameSvc() {
