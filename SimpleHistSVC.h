@@ -5,11 +5,13 @@
 #include <TFile.h>
 #include <TH1F.h>
 #include <TH2F.h>
+#include <TH3F.h>
 
 class SimpleHistSVC {
 protected:
    std::map<std::string,TH1F *> histsDB_1d;
    std::map<std::string,TH2F *> histsDB_2d;
+   std::map<std::string,TH3F *> histsDB_3d;
    std::string particleName;
    std::string detectorName;
    std::string processName;
@@ -22,6 +24,7 @@ public:
    void BookFillHist(std::string name, int nbinsX, float startX, float endX, int nbinsY, float startY, float endY,float x, float y, float weight=1., bool if_use_full_name = true);
    void BookFillCutHist(std::string name, int nbins, std::string cuts[], std::string label, float weight=1.);
    void BookFillCutHist(std::string name, int nbinsX, std::string cutsX[], int nbinsY, std::string cutsY[], std::string labelX, std::string labelY, float weight=1.);
+   void BookFill3dHist(std::string name, int nbinsX, float startX, float endX, int nbinsY, float startY, float endY, int nbinsZ, float startZ, float endZ, float x, float y, float z, float weight=1., bool if_use_fullname = true);
 
    void SetParticleTag(std::string name);
    void SetDetectorTag(std::string name);

@@ -90,6 +90,26 @@ void SimpleHistSVC::BookFillHist(std::string name, int nbinsX, float startX, flo
    hist->Fill(x,y,weight);
 }
 
+void SimpleHistSVC::BookFill3dHist(std::string name, int nbinsX, float startX, float endX, int nbinsY, float startY,
+                                   float endY, int nbinsZ, float startZ, float endZ, float x, float y, float z,
+                                   float weight, bool if_use_fullname) {
+
+   std::string fullname = (if_use_fullname) ? getFullName(name) : name;
+
+   auto itr = histsDB_3d.find(fullname);
+   TH3F * hist;
+   if(itr == histsDB_3d.end()) {
+      hist = new TH3F(fullname.c_str(),fullname.c_str(),nbinsX,startX,endX,nbinsY,startY,endY,nbinsZ,startZ,endZ);
+//      hist->Sumw2();
+      hist->SetDirectory(output_file);
+
+      histsDB_3d[fullname] = hist;
+   } else {
+      hist = itr->second;
+   }
+   hist->Fill(x,y,z,weight);
+}
+
 void SimpleHistSVC::BookFillCutHist(std::string name,int nbins, std::string cuts[], std::string label, float weight) {
    std::string fullname = std::string("Cutflow_1D_") + name;
    auto itr = histsDB_1d.find(fullname);
@@ -162,3 +182,5 @@ void SimpleHistSVC::InitNameSvc() {
    detectorName = std::string("");
    processName = std::string("");
 }
+
+

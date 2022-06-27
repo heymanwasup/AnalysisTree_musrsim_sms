@@ -313,54 +313,11 @@ bool t1::GmmStudy_PaperGeo() {
 
 bool t1::MoreParticles(){
    for (int i=0; i<save_n; i++){
-      switch (save_det_ID[i]) {
-         case 22: // Backdet0
-            if(PID_to_Name.find(save_particle_ID[i])!=PID_to_Name.end()) {
-               histSvc->SetParticleTag(PID_to_Name[save_particle_ID[i]]);
-            }
-            else {
-               std::string tag = std::string("PID_") + std::to_string(save_particle_ID[i]);
-               histSvc->SetParticleTag(tag.c_str());
-               if (unknown_particle_map.find(save_particle_ID[i]) == unknown_particle_map.end())
-                  unknown_particle_map[save_particle_ID[i]] = 1;
-               else
-                  unknown_particle_map[save_particle_ID[i]]++;
-            }
+      if (! save_particle_ID[i] == -13) continue;
 
-            histSvc->BookFillHist("count0", 1, 0, 1, 0);
-            break;
-         default:
-            char* cnt_num = Form("count%d", save_det_ID[i]-22);
-            if(PID_to_Name.find(save_particle_ID[i])!=PID_to_Name.end()) {
-               histSvc->SetParticleTag(PID_to_Name[save_particle_ID[i]]);
-            }
-            else {
-               std::string tag = std::string("PID_") + std::to_string(save_particle_ID[i]);
-               histSvc->SetParticleTag(tag.c_str());
-               if (unknown_particle_map.find(save_particle_ID[i]) == unknown_particle_map.end())
-                  unknown_particle_map[save_particle_ID[i]] = 1;
-               else
-                  unknown_particle_map[save_particle_ID[i]]++;
-            }
-
-            histSvc->BookFillHist(cnt_num, 1, 0, 1, 0);
-
-            if (save_det_ID[i] == 30) {
-               if(PID_to_Name.find(save_particle_ID[i])!=PID_to_Name.end()) {
-                  histSvc->SetParticleTag(PID_to_Name[save_particle_ID[i]]);
-               }
-               else {
-                  std::string tag = std::string("PID_") + std::to_string(save_particle_ID[i]);
-                  histSvc->SetParticleTag(tag.c_str());
-               }
-
-               float angle_degree = TMath::ATan(save_y[i] / save_z[i]) * 180 / TMath::Pi();
-               histSvc->BookFillHist("energy", 1000, 0, 10000, save_ke[i]);
-               histSvc->BookFillHist("angle", 1000, -90, 90, angle_degree);
-
-            }
-            break;
-      }
+      histSvc->BookFill3dHist("mup_pos", 500, -500, 500, 500, -500, 500, 600, -600, 600, save_x[i], save_y[i], save_z[i], 1.0, false);
+      histSvc->BookFillHist("mup_energy", 1000, 0, 10000, save_ke[i], 1.0, false);
+      histSvc->BookFillHist("mup_count", 1, 0, 1, 0, 1.0 ,false);
    }
    return true;
 }
