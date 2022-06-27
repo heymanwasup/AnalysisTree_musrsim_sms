@@ -313,7 +313,7 @@ bool t1::GmmStudy_PaperGeo() {
 
 bool t1::MoreParticles(){
    for (int i=0; i<det_n; i++){
-      if (det_ID[i] == 22 && det_edep_mup[i] != 0) continue;
+      if (det_ID[i] != 22 || det_edep_mup[i] == 0) continue;
 
       histSvc->BookFillHist("mup_kine", 5000, 0, 500, det_kine_mup[i], 1.0, false);
    }
