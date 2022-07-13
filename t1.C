@@ -316,14 +316,25 @@ bool t1::MoreParticles(){
       if (det_ID[i] != 22 || det_edep_mup[i] == 0) continue;
 
       histSvc->BookFillHist("mup_kine", 5000, 0, 500, det_kine_mup[i], 1.0, false);
-      if (det_kine_mup[i] < 4.5){
+      if (det_kine_mup[i] < 4.5 && det_kine_mup[i] > 3.5){
          if(PID_to_Name.find(det_VrtxPrtParticleID[i])!=PID_to_Name.end()) {
             histSvc->SetParticleTag(PID_to_Name[det_VrtxPrtParticleID[i]]);
          }
          else {
-            histSvc->SetParticleTag("UnknownPID");
+            histSvc->SetParticleTag(std::to_string(det_VrtxPrtParticleID[i]));
          }
-         histSvc->BookFillHist("prtcount", 1, 0, 1, 0);
+         histSvc->BookFillHist("prt_3.5-4.5_count", 1, 0, 1, 0);
+         histSvc->BookFillHist("tot_3.5-4.5_count", 1, 0, 1, 0, 1, false);
+      }
+      if (det_kine_mup[i] < 150 && det_kine_mup[i] > 120){
+         if(PID_to_Name.find(det_VrtxPrtParticleID[i])!=PID_to_Name.end()) {
+            histSvc->SetParticleTag(PID_to_Name[det_VrtxPrtParticleID[i]]);
+         }
+         else {
+            histSvc->SetParticleTag(std::to_string(det_VrtxPrtParticleID[i]));
+         }
+         histSvc->BookFillHist("prt_120-150_count", 1, 0, 1, 0);
+         histSvc->BookFillHist("tot_120-150_count", 1, 0, 1, 0, 1, false);
       }
    }
    return true;

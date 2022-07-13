@@ -247,6 +247,8 @@ t1::t1(TTree *tree,TFile *output_file) : fChain(0), f_out(output_file)
    PID_to_Name[11] = "e_m";
    PID_to_Name[-11] = "e_p";
    PID_to_Name[22] = "gamma";
+   PID_to_Name[321] = "K+";
+   PID_to_Name[-321] = "K-";
 
    ProcessIDMapping[1] = "DecayWithSpin";
    ProcessIDMapping[2] = "eIoni";
