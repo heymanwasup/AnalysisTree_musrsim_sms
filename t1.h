@@ -17,6 +17,7 @@
 #include <iostream>
 
 #define det_n_max 100
+#define mup_n_max 100
 #define save_n_max 1000
 
 
@@ -33,6 +34,8 @@ public:
    bool RealGeometryIrradiation();
    bool RealGeometryGmm();
    bool RealGeometry_1p2GeV();
+   bool mac_9098();
+   bool mac_9097();
 
    string GetParticleName(int PID);
    string GetProcessName(int ProcID);
@@ -91,6 +94,13 @@ public :
    Int_t           det_VrtxParticleID[det_n_max];   //[det_n]
    Int_t           det_VrtxPrtParticleID[det_n_max];   //[det_n]
 
+
+   Int_t           mup_n;
+   Int_t           mup_TrackID[mup_n_max];
+   Double_t        mup_GenposX[mup_n_max];
+   Double_t        mup_GenposY[mup_n_max];
+   Double_t        mup_GenposZ[mup_n_max];
+
    Int_t           det_VrtxProcID[det_n_max];   //[det_n]
 
    Double_t        det_VvvKine[det_n_max];   //[det_n]
@@ -143,6 +153,12 @@ public :
    TBranch        *b_det_kine;   //!
    TBranch        *b_det_kine_mup;   //!
    TBranch        *b_det_kine_mun;   //!
+
+   TBranch        *b_mup_n;
+   TBranch        *b_mup_TrackID;
+   TBranch        *b_mup_GenposX;
+   TBranch        *b_mup_GenposY;
+   TBranch        *b_mup_GenposZ;
 
 
 
@@ -359,6 +375,12 @@ void t1::Init(TTree *tree)
    fChain->SetBranchAddress("det_VrtxPrtTrackID", det_VrtxPrtTrackID, &b_det_VrtxPrtTrackID);
    fChain->SetBranchAddress("det_VrtxParticleID", det_VrtxParticleID, &b_det_VrtxParticleID);
    fChain->SetBranchAddress("det_VrtxPrtParticleID", det_VrtxPrtParticleID, &b_det_VrtxPrtParticleID);
+
+   fChain->SetBranchAddress("mup_n", &mup_n, &b_mup_n);
+   fChain->SetBranchAddress("mup_TrackID", mup_TrackID, &b_mup_TrackID);
+   fChain->SetBranchAddress("mup_GenposX", mup_GenposX, &b_mup_GenposX);
+   fChain->SetBranchAddress("mup_GenposY", mup_GenposY, &b_mup_GenposY);
+   fChain->SetBranchAddress("mup_GenposZ", mup_GenposZ, &b_mup_GenposZ);
 
    fChain->SetBranchAddress("det_kine", det_kine, &b_det_kine);
    fChain->SetBranchAddress("det_kine_mup", det_kine_mup, &b_det_kine_mup);

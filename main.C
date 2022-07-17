@@ -77,6 +77,12 @@ int main(int argc,char *argv[]) {
    else if (method_name == "RealGeometry_1p2GeV") {
       myAna.func_anlysis_method = &t1::RealGeometry_1p2GeV;
    }
+   else if (method_name == "mac_9098") {
+       myAna.func_anlysis_method = &t1::mac_9098;
+   }
+   else if (method_name == "mac_9097") {
+       myAna.func_anlysis_method = &t1::mac_9097;
+   }
    else {
       cout << "unknown method: " << method_name << endl;
       throw "main() : exception!";
