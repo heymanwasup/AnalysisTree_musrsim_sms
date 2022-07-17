@@ -401,22 +401,23 @@ bool t1::mac_9097() {
             }
             histSvc->BookFillHist("prt_120-150_count", 1, 0, 1, 0);
             histSvc->BookFillHist("tot_120-150_count", 1, 0, 1, 0, 1, false);
-        }
 
-        bool flag = false;
-        for (int j=0; j<mup_n; j++){
-            if (det_VrtxTrackID[i] == mup_TrackID[j]){
+            bool flag = false;
+            for (int j=0; j<mup_n; j++){
+                if (det_VrtxTrackID[i] == mup_TrackID[j]){
 //                std::cout << mup_GenposX[j] << " " << mup_GenposY[j] << " " << mup_GenposZ[j] << std::endl;
 //                histSvc->BookFill3dHist("mup_120-150_genpos", 600, -60, 60, 600, -60, 60, 1500, -150, 150, mup_GenposX[j], mup_GenposY[j], mup_GenposZ[j], 1,
 //                                        false);
-                histSvc->BookFillHist("mup_120-150_genposZ", 1500, -150, 150, mup_GenposZ[j], 1, false);
-                flag = true;
-                break;
+                    histSvc->BookFillHist("mup_120-150_genposZ", 1500, -150, 150, mup_GenposZ[j], 1, false);
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag) {
+                std::cout << "ERROR! Track not found! Track ID: " << det_VrtxTrackID[i] << std::endl;
             }
         }
-        if (!flag) {
-            std::cout << "ERROR! Track not found! Track ID: " << det_VrtxTrackID[i] << std::endl;
-        }
+
 
     }
 }
