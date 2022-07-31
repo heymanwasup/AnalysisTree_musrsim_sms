@@ -382,7 +382,38 @@ bool t1::mac_9097() {
 //                    std::cout << mup_GenposX[j] << " " << mup_GenposY[j] << " " << mup_GenposZ[j] << std::endl;
 //                    histSvc->BookFill3dHist("mup_3.5-4.5_genpos", 600, -60, 60, 600, -60, 60, 1500, -150, 150, mup_GenposX[j], mup_GenposY[j], mup_GenposZ[j], 1,
 //                                            false);
-                    histSvc->BookFillHist("mup_3.5-4.5_genposZ", 1500, -150, 150, mup_GenposZ[j], 1, false);
+                    histSvc->BookFillHist("mup_3.5-4.5_genposZ", 3000, -50, 50, mup_GenposZ[j], 1, false);
+                    double r = sqrt(pow(mup_GenposX[j],2) + pow(mup_GenposY[j], 2));
+                  histSvc->BookFillHist("mup_3.5-4.5_genposRZ", 3000, -60, 60, 3000, -50, 50, r, mup_GenposZ[j], 1, false);
+                  //   if (mup_GenposZ[j] < -9.9 && mup_GenposZ[j] > -10.1) std::cout << "CHECK: posZ is: " << mup_GenposZ[j] << std::endl;
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag) {
+                std::cout << "ERROR! Track not found! Track ID: " << det_VrtxTrackID[i] << std::endl;
+            }
+        }
+        if (det_kine_mup[i] < 3 && det_kine_mup[i] > 1){
+            if(PID_to_Name.find(det_VrtxPrtParticleID[i])!=PID_to_Name.end()) {
+                histSvc->SetParticleTag(PID_to_Name[det_VrtxPrtParticleID[i]]);
+            }
+            else {
+                histSvc->SetParticleTag(std::to_string(det_VrtxPrtParticleID[i]));
+            }
+            histSvc->BookFillHist("prt_1-3_count", 1, 0, 1, 0);
+            histSvc->BookFillHist("tot_1-3_count", 1, 0, 1, 0, 1, false);
+
+            bool flag = false;
+            for (int j=0; j<mup_n; j++){
+                if (det_VrtxTrackID[i] == mup_TrackID[j]){
+//                    std::cout << mup_GenposX[j] << " " << mup_GenposY[j] << " " << mup_GenposZ[j] << std::endl;
+//                    histSvc->BookFill3dHist("mup_3.5-4.5_genpos", 600, -60, 60, 600, -60, 60, 1500, -150, 150, mup_GenposX[j], mup_GenposY[j], mup_GenposZ[j], 1,
+//                                            false);
+                    histSvc->BookFillHist("mup_1-3_genposZ", 3000, -50, 50, mup_GenposZ[j], 1, false);
+                  //   if (mup_GenposZ[j] < -9.9 && mup_GenposZ[j] > -10.1) std::cout << "CHECK: posZ is: " << mup_GenposZ[j] << std::endl;
+                    double r = sqrt(pow(mup_GenposX[j],2) + pow(mup_GenposY[j], 2));
+                  histSvc->BookFillHist("mup_1-3_genposRZ", 3000, -60, 60, 3000, -50, 50, r, mup_GenposZ[j], 1, false);
                     flag = true;
                     break;
                 }
