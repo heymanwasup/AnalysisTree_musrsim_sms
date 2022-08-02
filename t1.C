@@ -384,7 +384,7 @@ bool t1::mac_9097() {
 //                                            false);
                     histSvc->BookFillHist("mup_3.5-4.5_genposZ", 3000, -50, 50, mup_GenposZ[j], 1, false);
                     double r = sqrt(pow(mup_GenposX[j],2) + pow(mup_GenposY[j], 2));
-                  histSvc->BookFillHist("mup_3.5-4.5_genposRZ", 3000, -60, 60, 3000, -50, 50, r, mup_GenposZ[j], 1, false);
+                  histSvc->BookFillHist("mup_3.5-4.5_genposRZ", 1500, 0, 60, 3000, -50, 50, r, mup_GenposZ[j], 1, false);
                   //   if (mup_GenposZ[j] < -9.9 && mup_GenposZ[j] > -10.1) std::cout << "CHECK: posZ is: " << mup_GenposZ[j] << std::endl;
                     flag = true;
                     break;
@@ -413,7 +413,7 @@ bool t1::mac_9097() {
                     histSvc->BookFillHist("mup_1-3_genposZ", 3000, -50, 50, mup_GenposZ[j], 1, false);
                   //   if (mup_GenposZ[j] < -9.9 && mup_GenposZ[j] > -10.1) std::cout << "CHECK: posZ is: " << mup_GenposZ[j] << std::endl;
                     double r = sqrt(pow(mup_GenposX[j],2) + pow(mup_GenposY[j], 2));
-                  histSvc->BookFillHist("mup_1-3_genposRZ", 3000, -60, 60, 3000, -50, 50, r, mup_GenposZ[j], 1, false);
+                  histSvc->BookFillHist("mup_1-3_genposRZ", 1500, 0, 60, 3000, -50, 50, r, mup_GenposZ[j], 1, false);
                     flag = true;
                     break;
                 }
@@ -440,6 +440,8 @@ bool t1::mac_9097() {
 //                histSvc->BookFill3dHist("mup_120-150_genpos", 600, -60, 60, 600, -60, 60, 1500, -150, 150, mup_GenposX[j], mup_GenposY[j], mup_GenposZ[j], 1,
 //                                        false);
                     histSvc->BookFillHist("mup_120-150_genposZ", 1500, -150, 150, mup_GenposZ[j], 1, false);
+                    double r = sqrt(pow(mup_GenposX[j],2) + pow(mup_GenposY[j], 2));
+                  histSvc->BookFillHist("mup_120-150_genposRZ", 1500, 0, 60, 3000, -50, 50, r, mup_GenposZ[j], 1, false);
                     flag = true;
                     break;
                 }
